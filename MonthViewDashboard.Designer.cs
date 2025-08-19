@@ -31,7 +31,6 @@
             components = new System.ComponentModel.Container();
             textBox1 = new TextBox();
             dataGridView1 = new DataGridView();
-            transactionBindingSource = new BindingSource(components);
             dayOfMonthToPayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             paymentEstimatedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -41,17 +40,18 @@
             isAutoPaySetupDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             commentsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            transactionBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(12, 442);
+            textBox1.Location = new Point(12, 39);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(314, 27);
             textBox1.TabIndex = 0;
-            textBox1.Text = "This is the dashboard";
+            textBox1.Text = "CurrentAvailableFunds";
             // 
             // dataGridView1
             // 
@@ -64,10 +64,6 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1051, 311);
             dataGridView1.TabIndex = 1;
-            // 
-            // transactionBindingSource
-            // 
-            transactionBindingSource.DataSource = typeof(Transaction);
             // 
             // dayOfMonthToPayDataGridViewTextBoxColumn
             // 
@@ -142,6 +138,10 @@
             categoryDataGridViewTextBoxColumn.MinimumWidth = 6;
             categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
             categoryDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // transactionBindingSource
+            // 
+            transactionBindingSource.DataSource = typeof(Transaction);
             // 
             // MonthViewDashboard
             // 
