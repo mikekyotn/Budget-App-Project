@@ -12,6 +12,7 @@ namespace Budget_App_Project
     public class Transaction
     {
         public uint DayOfMonthToPay { get; set; } // required
+        public  TransactionMonth transactionMonth { get; set;  }    // required
         public decimal PaymentEstimated { get; set; } //required
         public string? Description { get; set; } //who's getting paid or paying - required
         public bool IsRecurringPayment { get; set; } // optional default true
@@ -21,11 +22,12 @@ namespace Budget_App_Project
         public string? Comments { get; set; } // optional default ""        
         public string? Category { get; set; } //initially user defined, may make enum later optional default "undefined"
 
-        //Constructor - the only required arguments are dayOfMonthToPay, paymentEstimated, and description
-        public Transaction(uint dayOfMonthToPay, decimal paymentEstimated, string description, bool isRecurringPayment = true, 
+        //Constructor - the only required arguments are dayOfMonthToPay, transactionMonth, paymentEstimated, and description
+        public Transaction(uint dayOfMonthToPay, TransactionMonth month, decimal paymentEstimated, string description, bool isRecurringPayment = true, 
             bool isAutoPaySetup = true, bool isPaid = false, decimal paymentActual = 0, string comments = " ", string category = "undefined")
         {
             DayOfMonthToPay = dayOfMonthToPay;
+            transactionMonth = month;
             PaymentEstimated = paymentEstimated;
             IsRecurringPayment = isRecurringPayment;
             IsAutoPaySetup = isAutoPaySetup;
@@ -34,9 +36,17 @@ namespace Budget_App_Project
             Comments = comments;
             Description = description;
             Category = category;
-
         }
         public Transaction() { }
+    }
 
+    public enum TransactionMonth
+    {
+        Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+    }
+
+    public static class AllTransactionData
+    {
+        public static BindingList<Transaction> TransactionList = new BindingList<Transaction>();
     }
 }

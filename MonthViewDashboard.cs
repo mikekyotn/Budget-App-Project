@@ -11,24 +11,14 @@ using System.Windows.Forms;
 namespace Budget_App_Project
 {
     public partial class MonthViewDashboard : Form
-    {
-        //trying to incorporate a Class MonthBudgetData that is a combination of
-        //the month, available funds and a BindingList<Transaction>
-
-        MonthBudgetData testMonth = new MonthBudgetData(); 
-
-        testMonth.TransactionList = SampleData.CreateSampleMonth();
-             
-
-        //thisMonth.Month = "September";
-
-        
-
-        BindingList<Transaction> monthList = SampleData.CreateSampleMonth();
+    {        
         public MonthViewDashboard()
         {
-            InitializeComponent();
-            //dataGridView1.DataSource = monthList;
+            InitializeComponent();           
+            
+            SampleData.CreateSampleMonth();
+            dataGridView1.DataSource = AllTransactionData.TransactionList;            
+            //textBox1.Text = testMonth.CurrentAvailableFunds.ToString();
         }
     }
 }

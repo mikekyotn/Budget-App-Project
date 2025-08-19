@@ -16,7 +16,6 @@ namespace Budget_App_Project
         {
             InitializeComponent();
         }
-
         private void btnLoadMonth_Click(object sender, EventArgs e)
         {
             MonthViewDashboard monthView = new MonthViewDashboard();
