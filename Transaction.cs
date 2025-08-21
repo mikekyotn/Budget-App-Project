@@ -11,6 +11,7 @@ namespace Budget_App_Project
     //A transaction can be used to pay a debtor or to recieve payment/paycheck.
     public class Transaction
     {
+        public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
         public  TransactionMonth transactionMonth { get; set;  }    // required
         public decimal PaymentEstimated { get; set; } //required
@@ -26,6 +27,7 @@ namespace Budget_App_Project
         public Transaction(uint dayOfMonthToPay, TransactionMonth month, decimal paymentEstimated, string description, bool isRecurringPayment = true, 
             bool isAutoPaySetup = true, bool isPaid = false, decimal paymentActual = 0, string comments = " ", string category = "undefined")
         {
+            Id = Guid.NewGuid();
             DayOfMonthToPay = dayOfMonthToPay;
             transactionMonth = month;
             PaymentEstimated = paymentEstimated;
@@ -37,16 +39,25 @@ namespace Budget_App_Project
             Description = description;
             Category = category;
         }
-        public Transaction() { }
+        //Default empty constructor for a transaction
+        public Transaction() 
+        {
+            Id = Guid.NewGuid();
+        }
     }
 
     public enum TransactionMonth
     {
         Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
     }
-
+    
+    //List for ALL transactions accessible by all forms, static so no instantiation required
     public static class AllTransactionData
     {
-        public static BindingList<Transaction> TransactionList = new BindingList<Transaction>();
+        //public static BindingList<Transaction> TransactionList = new BindingList<Transaction>();
+        public static List<Transaction> TransactionList = new List<Transaction>();
     }
+
+    
+    
 }

@@ -15,11 +15,15 @@ namespace Budget_App_Project
         public LoadDataPage()
         {
             InitializeComponent();
+            //lstMonths allows user to select month to filter the data by month when loading
+            lstMonths.DataSource = Enum.GetValues(typeof(TransactionMonth));            
         }
         private void btnLoadMonth_Click(object sender, EventArgs e)
         {
-            MonthViewDashboard monthView = new MonthViewDashboard();
-            monthView.Show();
+            string selectedMonth = lstMonths.SelectedItem.ToString(); //use this to set the selected item
+            MonthViewDashboard monthView = new MonthViewDashboard(selectedMonth);
+            monthView.Show();            
         }
+
     }
 }

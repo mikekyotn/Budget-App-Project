@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             textBox1 = new TextBox();
             dataGridView1 = new DataGridView();
+            transactionMonth = new DataGridViewTextBoxColumn();
             dayOfMonthToPayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             paymentEstimatedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -41,6 +42,7 @@
             commentsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             transactionBindingSource = new BindingSource(components);
+            btnSaveTransactions = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
@@ -55,15 +57,25 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { dayOfMonthToPayDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, paymentEstimatedDataGridViewTextBoxColumn, paymentActualDataGridViewTextBoxColumn, isPaidDataGridViewCheckBoxColumn, isRecurringPaymentDataGridViewCheckBoxColumn, isAutoPaySetupDataGridViewCheckBoxColumn, commentsDataGridViewTextBoxColumn, categoryDataGridViewTextBoxColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { transactionMonth, dayOfMonthToPayDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, paymentEstimatedDataGridViewTextBoxColumn, paymentActualDataGridViewTextBoxColumn, isPaidDataGridViewCheckBoxColumn, isRecurringPaymentDataGridViewCheckBoxColumn, isAutoPaySetupDataGridViewCheckBoxColumn, commentsDataGridViewTextBoxColumn, categoryDataGridViewTextBoxColumn });
             dataGridView1.DataSource = transactionBindingSource;
             dataGridView1.Location = new Point(12, 89);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1051, 311);
             dataGridView1.TabIndex = 1;
+            // 
+            // transactionMonth
+            // 
+            transactionMonth.DataPropertyName = "transactionMonth";
+            transactionMonth.HeaderText = "transactionMonth";
+            transactionMonth.MinimumWidth = 6;
+            transactionMonth.Name = "transactionMonth";
+            transactionMonth.Width = 125;
             // 
             // dayOfMonthToPayDataGridViewTextBoxColumn
             // 
@@ -143,11 +155,22 @@
             // 
             transactionBindingSource.DataSource = typeof(Transaction);
             // 
+            // btnSaveTransactions
+            // 
+            btnSaveTransactions.Location = new Point(70, 419);
+            btnSaveTransactions.Name = "btnSaveTransactions";
+            btnSaveTransactions.Size = new Size(140, 75);
+            btnSaveTransactions.TabIndex = 2;
+            btnSaveTransactions.Text = "Save Transactions";
+            btnSaveTransactions.UseVisualStyleBackColor = true;
+            btnSaveTransactions.Click += btnSaveTransactions_Click;
+            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1078, 589);
+            Controls.Add(btnSaveTransactions);
             Controls.Add(dataGridView1);
             Controls.Add(textBox1);
             Name = "MonthViewDashboard";
@@ -163,6 +186,7 @@
         private TextBox textBox1;
         private DataGridView dataGridView1;
         private BindingSource transactionBindingSource;
+        private DataGridViewTextBoxColumn transactionMonth;
         private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn paymentEstimatedDataGridViewTextBoxColumn;
@@ -172,5 +196,6 @@
         private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
+        private Button btnSaveTransactions;
     }
 }

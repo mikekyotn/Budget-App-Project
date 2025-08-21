@@ -13,5 +13,6 @@ namespace Budget_App_Project
             ApplicationConfiguration.Initialize();
             Application.Run(new LoadDataPage());
         }
+
     }
 }

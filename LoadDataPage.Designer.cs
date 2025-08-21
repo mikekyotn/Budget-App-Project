@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             btnLoadMonth = new Button();
+            lstMonths = new ListBox();
             SuspendLayout();
             // 
             // btnLoadMonth
             // 
-            btnLoadMonth.Location = new Point(186, 125);
+            btnLoadMonth.Location = new Point(536, 58);
             btnLoadMonth.Name = "btnLoadMonth";
             btnLoadMonth.Size = new Size(232, 29);
             btnLoadMonth.TabIndex = 0;
@@ -41,11 +42,20 @@
             btnLoadMonth.UseVisualStyleBackColor = true;
             btnLoadMonth.Click += btnLoadMonth_Click;
             // 
+            // lstMonths
+            // 
+            lstMonths.FormattingEnabled = true;
+            lstMonths.Location = new Point(446, 58);
+            lstMonths.Name = "lstMonths";
+            lstMonths.Size = new Size(84, 184);
+            lstMonths.TabIndex = 1;
+            // 
             // LoadDataPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lstMonths);
             Controls.Add(btnLoadMonth);
             Name = "LoadDataPage";
             Text = "LoadDataPage";
@@ -55,5 +65,6 @@
         #endregion
 
         private Button btnLoadMonth;
+        private ListBox lstMonths;
     }
 }
