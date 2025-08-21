@@ -8,31 +8,34 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Budget_App_Project
 {
     public partial class MonthViewDashboard : Form
     {
+
         public MonthViewDashboard(string month)
         {
             InitializeComponent();
 
             //Load a BindingList from a json file that is filtered on the month desired
             AllTransactionData.TransactionList = LoadFromFile();
-
+            lblMonth.Text = month;
+            FilterAndUpdateDataSource(month);
             //convert month to Enum type so can do comparison and filter
+            //TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
+            //List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
+            //dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
+        }
+
+        public void FilterAndUpdateDataSource (string month)
+        {
             TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
             List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
             dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
-
-
-            //Once I get a file made we can replace this sampledata with loading from file
-            //should filter on the month if data available
-            //SampleData.CreateSampleMonth(); 
-            //dataGridView1.DataSource = AllTransactionData.TransactionList;
-
         }
-        
+
         public string GetFolderPath()
         {
             return @"d:\G5ProgSpace\BudgetAppFiles";
@@ -43,7 +46,7 @@ namespace Budget_App_Project
             string folderPath = GetFolderPath();
             string filePath = Path.Combine(folderPath, "AllTransactions.json");
             if (File.Exists(filePath))
-            {                
+            {
                 var json = File.ReadAllText(filePath);
                 var transactList = JsonSerializer.Deserialize<List<Transaction>>(json);
                 return new List<Transaction>(transactList);
@@ -56,7 +59,7 @@ namespace Budget_App_Project
             //for testing hard coding location
             string folderPath = GetFolderPath();
             string filePath = Path.Combine(folderPath, "AllTransactions.json");
-            
+
             //Because the bindingList and AllTrasn.TransList reference the same obj,
             //edits reflect in the master List.  But adds/removes are not reflected.
             var transactionsToPrintList = AllTransactionData.TransactionList;
@@ -69,6 +72,23 @@ namespace Budget_App_Project
                 });
                 File.WriteAllText(filePath, json);
             }
+        }
+
+        private void btnNewTransaction_Click(object sender, EventArgs e)
+        {            
+            AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
+            addNewTransaction.ShowDialog();
+
+            //need to refilter and update the dataGridView datasource
+            FilterAndUpdateDataSource(lblMonth.Text);
+            //TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
+            //List<Transaction> updatedfilteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
+            //dataGridView1.DataSource = new BindingList<Transaction>(updatedfilteredList);
+        }
+
+        private void btnBackToMain_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

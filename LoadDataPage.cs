@@ -16,14 +16,18 @@ namespace Budget_App_Project
         {
             InitializeComponent();
             //lstMonths allows user to select month to filter the data by month when loading
-            lstMonths.DataSource = Enum.GetValues(typeof(TransactionMonth));            
+            lstMonths.DataSource = Enum.GetValues(typeof(TransactionMonth));
         }
         private void btnLoadMonth_Click(object sender, EventArgs e)
         {
             string selectedMonth = lstMonths.SelectedItem.ToString(); //use this to set the selected item
             MonthViewDashboard monthView = new MonthViewDashboard(selectedMonth);
-            monthView.Show();            
+            monthView.Show();
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

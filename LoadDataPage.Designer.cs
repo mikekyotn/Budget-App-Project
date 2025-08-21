@@ -30,6 +30,7 @@
         {
             btnLoadMonth = new Button();
             lstMonths = new ListBox();
+            btnExit = new Button();
             SuspendLayout();
             // 
             // btnLoadMonth
@@ -50,11 +51,22 @@
             lstMonths.Size = new Size(84, 184);
             lstMonths.TabIndex = 1;
             // 
+            // btnExit
+            // 
+            btnExit.Location = new Point(659, 383);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(94, 29);
+            btnExit.TabIndex = 2;
+            btnExit.Text = "Exit";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
+            // 
             // LoadDataPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnExit);
             Controls.Add(lstMonths);
             Controls.Add(btnLoadMonth);
             Name = "LoadDataPage";
@@ -66,5 +78,6 @@
 
         private Button btnLoadMonth;
         private ListBox lstMonths;
+        private Button btnExit;
     }
 }

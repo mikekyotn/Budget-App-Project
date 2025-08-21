@@ -43,6 +43,9 @@
             categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             transactionBindingSource = new BindingSource(components);
             btnSaveTransactions = new Button();
+            btnNewTransaction = new Button();
+            lblMonth = new Label();
+            btnBackToMain = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
@@ -66,7 +69,7 @@
             dataGridView1.Location = new Point(12, 89);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1051, 311);
+            dataGridView1.Size = new Size(1051, 353);
             dataGridView1.TabIndex = 1;
             // 
             // transactionMonth
@@ -157,7 +160,7 @@
             // 
             // btnSaveTransactions
             // 
-            btnSaveTransactions.Location = new Point(70, 419);
+            btnSaveTransactions.Location = new Point(94, 502);
             btnSaveTransactions.Name = "btnSaveTransactions";
             btnSaveTransactions.Size = new Size(140, 75);
             btnSaveTransactions.TabIndex = 2;
@@ -165,11 +168,44 @@
             btnSaveTransactions.UseVisualStyleBackColor = true;
             btnSaveTransactions.Click += btnSaveTransactions_Click;
             // 
+            // btnNewTransaction
+            // 
+            btnNewTransaction.Location = new Point(361, 512);
+            btnNewTransaction.Name = "btnNewTransaction";
+            btnNewTransaction.Size = new Size(124, 65);
+            btnNewTransaction.TabIndex = 3;
+            btnNewTransaction.Text = "Add Transaction";
+            btnNewTransaction.UseVisualStyleBackColor = true;
+            btnNewTransaction.Click += btnNewTransaction_Click;
+            // 
+            // lblMonth
+            // 
+            lblMonth.AutoSize = true;
+            lblMonth.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblMonth.Location = new Point(780, 22);
+            lblMonth.Name = "lblMonth";
+            lblMonth.Size = new Size(152, 46);
+            lblMonth.TabIndex = 4;
+            lblMonth.Text = "(month)";
+            // 
+            // btnBackToMain
+            // 
+            btnBackToMain.Location = new Point(939, 512);
+            btnBackToMain.Name = "btnBackToMain";
+            btnBackToMain.Size = new Size(124, 65);
+            btnBackToMain.TabIndex = 5;
+            btnBackToMain.Text = "Back to Main";
+            btnBackToMain.UseVisualStyleBackColor = true;
+            btnBackToMain.Click += btnBackToMain_Click;
+            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1078, 589);
+            Controls.Add(btnBackToMain);
+            Controls.Add(lblMonth);
+            Controls.Add(btnNewTransaction);
             Controls.Add(btnSaveTransactions);
             Controls.Add(dataGridView1);
             Controls.Add(textBox1);
@@ -197,5 +233,8 @@
         private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
         private Button btnSaveTransactions;
+        private Button btnNewTransaction;
+        private Label lblMonth;
+        private Button btnBackToMain;
     }
 }
