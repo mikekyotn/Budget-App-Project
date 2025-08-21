@@ -31,6 +31,12 @@
             components = new System.ComponentModel.Container();
             textBox1 = new TextBox();
             dataGridView1 = new DataGridView();
+            transactionBindingSource = new BindingSource(components);
+            btnSaveTransactions = new Button();
+            btnNewTransaction = new Button();
+            lblMonth = new Label();
+            btnBackToMain = new Button();
+            btnDeleteTransaction = new Button();
             transactionMonth = new DataGridViewTextBoxColumn();
             dayOfMonthToPayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -41,11 +47,6 @@
             isAutoPaySetupDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             commentsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            transactionBindingSource = new BindingSource(components);
-            btnSaveTransactions = new Button();
-            btnNewTransaction = new Button();
-            lblMonth = new Label();
-            btnBackToMain = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
@@ -72,18 +73,73 @@
             dataGridView1.Size = new Size(1051, 353);
             dataGridView1.TabIndex = 1;
             // 
+            // transactionBindingSource
+            // 
+            transactionBindingSource.DataSource = typeof(Transaction);
+            // 
+            // btnSaveTransactions
+            // 
+            btnSaveTransactions.Location = new Point(939, 448);
+            btnSaveTransactions.Name = "btnSaveTransactions";
+            btnSaveTransactions.Size = new Size(124, 65);
+            btnSaveTransactions.TabIndex = 2;
+            btnSaveTransactions.Text = "Save Updates";
+            btnSaveTransactions.UseVisualStyleBackColor = true;
+            btnSaveTransactions.Click += btnSaveTransactions_Click;
+            // 
+            // btnNewTransaction
+            // 
+            btnNewTransaction.Location = new Point(361, 512);
+            btnNewTransaction.Name = "btnNewTransaction";
+            btnNewTransaction.Size = new Size(124, 65);
+            btnNewTransaction.TabIndex = 3;
+            btnNewTransaction.Text = "Add Transaction";
+            btnNewTransaction.UseVisualStyleBackColor = true;
+            btnNewTransaction.Click += btnNewTransaction_Click;
+            // 
+            // lblMonth
+            // 
+            lblMonth.AutoSize = true;
+            lblMonth.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblMonth.Location = new Point(780, 22);
+            lblMonth.Name = "lblMonth";
+            lblMonth.Size = new Size(152, 46);
+            lblMonth.TabIndex = 4;
+            lblMonth.Text = "(month)";
+            // 
+            // btnBackToMain
+            // 
+            btnBackToMain.Location = new Point(939, 515);
+            btnBackToMain.Name = "btnBackToMain";
+            btnBackToMain.Size = new Size(124, 65);
+            btnBackToMain.TabIndex = 5;
+            btnBackToMain.Text = "Back to Main";
+            btnBackToMain.UseVisualStyleBackColor = true;
+            btnBackToMain.Click += btnBackToMain_Click;
+            // 
+            // btnDeleteTransaction
+            // 
+            btnDeleteTransaction.Location = new Point(527, 512);
+            btnDeleteTransaction.Name = "btnDeleteTransaction";
+            btnDeleteTransaction.Size = new Size(124, 65);
+            btnDeleteTransaction.TabIndex = 6;
+            btnDeleteTransaction.Text = "Delete Transaction";
+            btnDeleteTransaction.UseVisualStyleBackColor = true;
+            btnDeleteTransaction.Click += btnDeleteTransaction_Click;
+            // 
             // transactionMonth
             // 
             transactionMonth.DataPropertyName = "transactionMonth";
             transactionMonth.HeaderText = "transactionMonth";
             transactionMonth.MinimumWidth = 6;
             transactionMonth.Name = "transactionMonth";
+            transactionMonth.Visible = false;
             transactionMonth.Width = 125;
             // 
             // dayOfMonthToPayDataGridViewTextBoxColumn
             // 
             dayOfMonthToPayDataGridViewTextBoxColumn.DataPropertyName = "DayOfMonthToPay";
-            dayOfMonthToPayDataGridViewTextBoxColumn.HeaderText = "DayOfMonthToPay";
+            dayOfMonthToPayDataGridViewTextBoxColumn.HeaderText = "Due Day";
             dayOfMonthToPayDataGridViewTextBoxColumn.MinimumWidth = 6;
             dayOfMonthToPayDataGridViewTextBoxColumn.Name = "dayOfMonthToPayDataGridViewTextBoxColumn";
             dayOfMonthToPayDataGridViewTextBoxColumn.Width = 125;
@@ -94,7 +150,7 @@
             descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
             descriptionDataGridViewTextBoxColumn.MinimumWidth = 6;
             descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            descriptionDataGridViewTextBoxColumn.Width = 125;
+            descriptionDataGridViewTextBoxColumn.Width = 250;
             // 
             // paymentEstimatedDataGridViewTextBoxColumn
             // 
@@ -154,55 +210,12 @@
             categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
             categoryDataGridViewTextBoxColumn.Width = 125;
             // 
-            // transactionBindingSource
-            // 
-            transactionBindingSource.DataSource = typeof(Transaction);
-            // 
-            // btnSaveTransactions
-            // 
-            btnSaveTransactions.Location = new Point(94, 502);
-            btnSaveTransactions.Name = "btnSaveTransactions";
-            btnSaveTransactions.Size = new Size(140, 75);
-            btnSaveTransactions.TabIndex = 2;
-            btnSaveTransactions.Text = "Save Transactions";
-            btnSaveTransactions.UseVisualStyleBackColor = true;
-            btnSaveTransactions.Click += btnSaveTransactions_Click;
-            // 
-            // btnNewTransaction
-            // 
-            btnNewTransaction.Location = new Point(361, 512);
-            btnNewTransaction.Name = "btnNewTransaction";
-            btnNewTransaction.Size = new Size(124, 65);
-            btnNewTransaction.TabIndex = 3;
-            btnNewTransaction.Text = "Add Transaction";
-            btnNewTransaction.UseVisualStyleBackColor = true;
-            btnNewTransaction.Click += btnNewTransaction_Click;
-            // 
-            // lblMonth
-            // 
-            lblMonth.AutoSize = true;
-            lblMonth.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblMonth.Location = new Point(780, 22);
-            lblMonth.Name = "lblMonth";
-            lblMonth.Size = new Size(152, 46);
-            lblMonth.TabIndex = 4;
-            lblMonth.Text = "(month)";
-            // 
-            // btnBackToMain
-            // 
-            btnBackToMain.Location = new Point(939, 512);
-            btnBackToMain.Name = "btnBackToMain";
-            btnBackToMain.Size = new Size(124, 65);
-            btnBackToMain.TabIndex = 5;
-            btnBackToMain.Text = "Back to Main";
-            btnBackToMain.UseVisualStyleBackColor = true;
-            btnBackToMain.Click += btnBackToMain_Click;
-            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1078, 589);
+            Controls.Add(btnDeleteTransaction);
             Controls.Add(btnBackToMain);
             Controls.Add(lblMonth);
             Controls.Add(btnNewTransaction);
@@ -222,6 +235,11 @@
         private TextBox textBox1;
         private DataGridView dataGridView1;
         private BindingSource transactionBindingSource;
+        private Button btnSaveTransactions;
+        private Button btnNewTransaction;
+        private Label lblMonth;
+        private Button btnBackToMain;
+        private Button btnDeleteTransaction;
         private DataGridViewTextBoxColumn transactionMonth;
         private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
@@ -232,9 +250,5 @@
         private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
-        private Button btnSaveTransactions;
-        private Button btnNewTransaction;
-        private Label lblMonth;
-        private Button btnBackToMain;
     }
 }

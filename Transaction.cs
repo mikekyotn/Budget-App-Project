@@ -9,7 +9,7 @@ namespace Budget_App_Project
 {
     //This is a single transaction made in one monthly budget list.
     //A transaction can be used to pay a debtor or to recieve payment/paycheck.
-    public class Transaction
+    public class Transaction : IEquatable<Transaction>
     {
         public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
@@ -46,6 +46,12 @@ namespace Budget_App_Project
         public Transaction() 
         {
             Id = Guid.NewGuid();
+        }
+
+        public bool Equals(Transaction? other)
+        {
+            if (other == null) return false;
+            return (this.Id.Equals(other.Id));
         }
     }
 

@@ -54,10 +54,8 @@ namespace Budget_App_Project
                 type,
                 txtComments.Text,
                 "User-added"
-                ));
-            
+                ));            
             this.Close();
-
         }
     }
 }

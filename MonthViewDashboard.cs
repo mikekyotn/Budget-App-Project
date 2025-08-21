@@ -23,24 +23,17 @@ namespace Budget_App_Project
             AllTransactionData.TransactionList = LoadFromFile();
             lblMonth.Text = month;
             FilterAndUpdateDataSource(month);
-            //convert month to Enum type so can do comparison and filter
-            //TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
-            //List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
-            //dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
         }
-
-        public void FilterAndUpdateDataSource (string month)
+        public void FilterAndUpdateDataSource(string month)
         {
             TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
             List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
             dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
         }
-
         public string GetFolderPath()
         {
             return @"d:\G5ProgSpace\BudgetAppFiles";
         }
-
         public List<Transaction> LoadFromFile()
         {
             string folderPath = GetFolderPath();
@@ -59,9 +52,7 @@ namespace Budget_App_Project
             //for testing hard coding location
             string folderPath = GetFolderPath();
             string filePath = Path.Combine(folderPath, "AllTransactions.json");
-
-            //Because the bindingList and AllTrasn.TransList reference the same obj,
-            //edits reflect in the master List.  But adds/removes are not reflected.
+                        
             var transactionsToPrintList = AllTransactionData.TransactionList;
 
             if (transactionsToPrintList != null)
@@ -73,22 +64,33 @@ namespace Budget_App_Project
                 File.WriteAllText(filePath, json);
             }
         }
-
         private void btnNewTransaction_Click(object sender, EventArgs e)
-        {            
+        {
             AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
             addNewTransaction.ShowDialog();
 
             //need to refilter and update the dataGridView datasource
             FilterAndUpdateDataSource(lblMonth.Text);
-            //TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
-            //List<Transaction> updatedfilteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).ToList();
-            //dataGridView1.DataSource = new BindingList<Transaction>(updatedfilteredList);
         }
-
         private void btnBackToMain_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnDeleteTransaction_Click(object sender, EventArgs e)
+        {
+            Transaction selectedTransaction = (Transaction)dataGridView1.CurrentRow.DataBoundItem;
+            var confirmDelete = MessageBox.Show(
+                $"Are you sure you want to delete {selectedTransaction.Description} transaction?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+                );
+            if (confirmDelete == DialogResult.Yes)
+            {
+                AllTransactionData.TransactionList.Remove(selectedTransaction);
+                FilterAndUpdateDataSource(lblMonth.Text);
+            }
         }
     }
 }
