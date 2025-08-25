@@ -36,17 +36,17 @@
             // 
             // btnLoadMonth
             // 
-            btnLoadMonth.Location = new Point(295, 95);
+            btnLoadMonth.Location = new Point(527, 53);
             btnLoadMonth.Name = "btnLoadMonth";
             btnLoadMonth.Size = new Size(232, 29);
             btnLoadMonth.TabIndex = 0;
-            btnLoadMonth.Text = "Load Month";
+            btnLoadMonth.Text = "Update Month";
             btnLoadMonth.UseVisualStyleBackColor = true;
             btnLoadMonth.Click += btnLoadMonth_Click;
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(659, 383);
+            btnExit.Location = new Point(665, 391);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(94, 29);
             btnExit.TabIndex = 2;
@@ -57,18 +57,18 @@
             // cbBoxMonth
             // 
             cbBoxMonth.FormattingEnabled = true;
-            cbBoxMonth.Location = new Point(542, 96);
+            cbBoxMonth.Location = new Point(370, 54);
             cbBoxMonth.Name = "cbBoxMonth";
             cbBoxMonth.Size = new Size(151, 28);
             cbBoxMonth.TabIndex = 3;
             // 
             // btnLoadTemplateFromFile
             // 
-            btnLoadTemplateFromFile.Location = new Point(301, 138);
+            btnLoadTemplateFromFile.Location = new Point(533, 148);
             btnLoadTemplateFromFile.Name = "btnLoadTemplateFromFile";
             btnLoadTemplateFromFile.Size = new Size(226, 29);
             btnLoadTemplateFromFile.TabIndex = 4;
-            btnLoadTemplateFromFile.Text = "Load Template";
+            btnLoadTemplateFromFile.Text = "Edit Template";
             btnLoadTemplateFromFile.UseVisualStyleBackColor = true;
             btnLoadTemplateFromFile.Click += btnLoadTemplateFromFile_Click;
             // 

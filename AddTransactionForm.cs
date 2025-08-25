@@ -19,8 +19,8 @@ namespace Budget_App_Project
         {
             InitializeComponent();
             List<uint> days = new List<uint> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                11, 12, 13, 14, 15, 16, 17,18,19,20,
-                21,22,23,24,25,26,27,28,29,30,31};
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
 
             cbBoxPaymentDay.DataSource = days;
             cbBoxTransactType.DataSource = Enum.GetValues(typeof(TransactionType));
@@ -42,8 +42,7 @@ namespace Budget_App_Project
             uint day = (uint)cbBoxPaymentDay.SelectedItem;
             TransactionType type = (TransactionType)cbBoxTransactType.SelectedItem;
             if (lblHeaderMonth.Text == "TEMPLATE")
-            {
-                //PROBLEM: TROUBLE WITH MONTH FOR TEMPLATE CODE IS BROKEN HERE
+            {                
                 MonthTemplate.TemplateMaster.Add(
                     new Transaction(
                     day,

@@ -30,7 +30,6 @@ namespace Budget_App_Project
             MonthViewDashboard monthView = new MonthViewDashboard(selectedMonth);
             monthView.Show();
         }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -29,49 +29,144 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            textBox1 = new TextBox();
+            txtCurrentFunds = new TextBox();
             dataGridView1 = new DataGridView();
+            transactionMonth = new DataGridViewTextBoxColumn();
+            dayOfMonthToPayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            Type = new DataGridViewTextBoxColumn();
+            paymentEstimatedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            paymentActualDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            isPaidDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            isRecurringPaymentDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            isAutoPaySetupDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            commentsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             transactionBindingSource = new BindingSource(components);
             btnSaveTransactions = new Button();
             btnNewTransaction = new Button();
             lblMonth = new Label();
             btnBackToMain = new Button();
             btnDeleteTransaction = new Button();
-            transactionMonth = new DataGridViewTextBoxColumn();
-            dayOfMonthToPayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            paymentEstimatedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            paymentActualDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            isPaidDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isRecurringPaymentDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isAutoPaySetupDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            commentsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            btnCopyTemplateToMonth = new Button();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
             // 
-            // textBox1
+            // txtCurrentFunds
             // 
-            textBox1.Location = new Point(12, 39);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(314, 27);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "CurrentAvailableFunds";
+            txtCurrentFunds.Location = new Point(12, 39);
+            txtCurrentFunds.Name = "txtCurrentFunds";
+            txtCurrentFunds.Size = new Size(314, 27);
+            txtCurrentFunds.TabIndex = 0;
+            txtCurrentFunds.Text = "CurrentAvailableFunds";
             // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { transactionMonth, dayOfMonthToPayDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, paymentEstimatedDataGridViewTextBoxColumn, paymentActualDataGridViewTextBoxColumn, isPaidDataGridViewCheckBoxColumn, isRecurringPaymentDataGridViewCheckBoxColumn, isAutoPaySetupDataGridViewCheckBoxColumn, commentsDataGridViewTextBoxColumn, categoryDataGridViewTextBoxColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { transactionMonth, dayOfMonthToPayDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, Type, paymentEstimatedDataGridViewTextBoxColumn, paymentActualDataGridViewTextBoxColumn, isPaidDataGridViewCheckBoxColumn, isRecurringPaymentDataGridViewCheckBoxColumn, isAutoPaySetupDataGridViewCheckBoxColumn, categoryDataGridViewTextBoxColumn, commentsDataGridViewTextBoxColumn });
             dataGridView1.DataSource = transactionBindingSource;
             dataGridView1.Location = new Point(12, 89);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1051, 353);
+            dataGridView1.Size = new Size(1258, 353);
             dataGridView1.TabIndex = 1;
+            // 
+            // transactionMonth
+            // 
+            transactionMonth.DataPropertyName = "transactionMonth";
+            transactionMonth.HeaderText = "transactionMonth";
+            transactionMonth.MinimumWidth = 6;
+            transactionMonth.Name = "transactionMonth";
+            transactionMonth.Visible = false;
+            transactionMonth.Width = 125;
+            // 
+            // dayOfMonthToPayDataGridViewTextBoxColumn
+            // 
+            dayOfMonthToPayDataGridViewTextBoxColumn.DataPropertyName = "DayOfMonthToPay";
+            dayOfMonthToPayDataGridViewTextBoxColumn.HeaderText = "Due Day";
+            dayOfMonthToPayDataGridViewTextBoxColumn.MinimumWidth = 6;
+            dayOfMonthToPayDataGridViewTextBoxColumn.Name = "dayOfMonthToPayDataGridViewTextBoxColumn";
+            dayOfMonthToPayDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            descriptionDataGridViewTextBoxColumn.MinimumWidth = 6;
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            descriptionDataGridViewTextBoxColumn.Width = 250;
+            // 
+            // Type
+            // 
+            Type.DataPropertyName = "Type";
+            Type.HeaderText = "Type";
+            Type.MinimumWidth = 6;
+            Type.Name = "Type";
+            Type.Width = 125;
+            // 
+            // paymentEstimatedDataGridViewTextBoxColumn
+            // 
+            paymentEstimatedDataGridViewTextBoxColumn.DataPropertyName = "PaymentEstimated";
+            paymentEstimatedDataGridViewTextBoxColumn.HeaderText = "Budgeted";
+            paymentEstimatedDataGridViewTextBoxColumn.MinimumWidth = 6;
+            paymentEstimatedDataGridViewTextBoxColumn.Name = "paymentEstimatedDataGridViewTextBoxColumn";
+            paymentEstimatedDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // paymentActualDataGridViewTextBoxColumn
+            // 
+            paymentActualDataGridViewTextBoxColumn.DataPropertyName = "PaymentActual";
+            paymentActualDataGridViewTextBoxColumn.HeaderText = "Amount Paid";
+            paymentActualDataGridViewTextBoxColumn.MinimumWidth = 6;
+            paymentActualDataGridViewTextBoxColumn.Name = "paymentActualDataGridViewTextBoxColumn";
+            paymentActualDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // isPaidDataGridViewCheckBoxColumn
+            // 
+            isPaidDataGridViewCheckBoxColumn.DataPropertyName = "IsPaid";
+            isPaidDataGridViewCheckBoxColumn.HeaderText = "Payment Complete";
+            isPaidDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            isPaidDataGridViewCheckBoxColumn.Name = "isPaidDataGridViewCheckBoxColumn";
+            isPaidDataGridViewCheckBoxColumn.Width = 125;
+            // 
+            // isRecurringPaymentDataGridViewCheckBoxColumn
+            // 
+            isRecurringPaymentDataGridViewCheckBoxColumn.DataPropertyName = "IsRecurringPayment";
+            isRecurringPaymentDataGridViewCheckBoxColumn.HeaderText = "IsRecurringPayment";
+            isRecurringPaymentDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            isRecurringPaymentDataGridViewCheckBoxColumn.Name = "isRecurringPaymentDataGridViewCheckBoxColumn";
+            isRecurringPaymentDataGridViewCheckBoxColumn.Visible = false;
+            isRecurringPaymentDataGridViewCheckBoxColumn.Width = 125;
+            // 
+            // isAutoPaySetupDataGridViewCheckBoxColumn
+            // 
+            isAutoPaySetupDataGridViewCheckBoxColumn.DataPropertyName = "IsAutoPaySetup";
+            isAutoPaySetupDataGridViewCheckBoxColumn.HeaderText = "IsAutoPaySetup";
+            isAutoPaySetupDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            isAutoPaySetupDataGridViewCheckBoxColumn.Name = "isAutoPaySetupDataGridViewCheckBoxColumn";
+            isAutoPaySetupDataGridViewCheckBoxColumn.Visible = false;
+            isAutoPaySetupDataGridViewCheckBoxColumn.Width = 125;
+            // 
+            // categoryDataGridViewTextBoxColumn
+            // 
+            categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
+            categoryDataGridViewTextBoxColumn.HeaderText = "Category";
+            categoryDataGridViewTextBoxColumn.MinimumWidth = 6;
+            categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
+            categoryDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // commentsDataGridViewTextBoxColumn
+            // 
+            commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
+            commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
+            commentsDataGridViewTextBoxColumn.MinimumWidth = 6;
+            commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
+            commentsDataGridViewTextBoxColumn.Width = 300;
             // 
             // transactionBindingSource
             // 
@@ -89,7 +184,7 @@
             // 
             // btnNewTransaction
             // 
-            btnNewTransaction.Location = new Point(361, 512);
+            btnNewTransaction.Location = new Point(680, 448);
             btnNewTransaction.Name = "btnNewTransaction";
             btnNewTransaction.Size = new Size(124, 65);
             btnNewTransaction.TabIndex = 3;
@@ -119,7 +214,7 @@
             // 
             // btnDeleteTransaction
             // 
-            btnDeleteTransaction.Location = new Point(527, 512);
+            btnDeleteTransaction.Location = new Point(680, 515);
             btnDeleteTransaction.Name = "btnDeleteTransaction";
             btnDeleteTransaction.Size = new Size(124, 65);
             btnDeleteTransaction.TabIndex = 6;
@@ -127,101 +222,39 @@
             btnDeleteTransaction.UseVisualStyleBackColor = true;
             btnDeleteTransaction.Click += btnDeleteTransaction_Click;
             // 
-            // transactionMonth
+            // btnCopyTemplateToMonth
             // 
-            transactionMonth.DataPropertyName = "transactionMonth";
-            transactionMonth.HeaderText = "transactionMonth";
-            transactionMonth.MinimumWidth = 6;
-            transactionMonth.Name = "transactionMonth";
-            transactionMonth.Visible = false;
-            transactionMonth.Width = 125;
+            btnCopyTemplateToMonth.Location = new Point(63, 493);
+            btnCopyTemplateToMonth.Name = "btnCopyTemplateToMonth";
+            btnCopyTemplateToMonth.Size = new Size(124, 65);
+            btnCopyTemplateToMonth.TabIndex = 7;
+            btnCopyTemplateToMonth.Text = "Load Template";
+            btnCopyTemplateToMonth.UseVisualStyleBackColor = true;
+            btnCopyTemplateToMonth.Click += btnCopyTemplateToMonth_Click;
             // 
-            // dayOfMonthToPayDataGridViewTextBoxColumn
+            // label1
             // 
-            dayOfMonthToPayDataGridViewTextBoxColumn.DataPropertyName = "DayOfMonthToPay";
-            dayOfMonthToPayDataGridViewTextBoxColumn.HeaderText = "Due Day";
-            dayOfMonthToPayDataGridViewTextBoxColumn.MinimumWidth = 6;
-            dayOfMonthToPayDataGridViewTextBoxColumn.Name = "dayOfMonthToPayDataGridViewTextBoxColumn";
-            dayOfMonthToPayDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-            descriptionDataGridViewTextBoxColumn.MinimumWidth = 6;
-            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            descriptionDataGridViewTextBoxColumn.Width = 250;
-            // 
-            // paymentEstimatedDataGridViewTextBoxColumn
-            // 
-            paymentEstimatedDataGridViewTextBoxColumn.DataPropertyName = "PaymentEstimated";
-            paymentEstimatedDataGridViewTextBoxColumn.HeaderText = "PaymentEstimated";
-            paymentEstimatedDataGridViewTextBoxColumn.MinimumWidth = 6;
-            paymentEstimatedDataGridViewTextBoxColumn.Name = "paymentEstimatedDataGridViewTextBoxColumn";
-            paymentEstimatedDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // paymentActualDataGridViewTextBoxColumn
-            // 
-            paymentActualDataGridViewTextBoxColumn.DataPropertyName = "PaymentActual";
-            paymentActualDataGridViewTextBoxColumn.HeaderText = "PaymentActual";
-            paymentActualDataGridViewTextBoxColumn.MinimumWidth = 6;
-            paymentActualDataGridViewTextBoxColumn.Name = "paymentActualDataGridViewTextBoxColumn";
-            paymentActualDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // isPaidDataGridViewCheckBoxColumn
-            // 
-            isPaidDataGridViewCheckBoxColumn.DataPropertyName = "IsPaid";
-            isPaidDataGridViewCheckBoxColumn.HeaderText = "IsPaid";
-            isPaidDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            isPaidDataGridViewCheckBoxColumn.Name = "isPaidDataGridViewCheckBoxColumn";
-            isPaidDataGridViewCheckBoxColumn.Width = 125;
-            // 
-            // isRecurringPaymentDataGridViewCheckBoxColumn
-            // 
-            isRecurringPaymentDataGridViewCheckBoxColumn.DataPropertyName = "IsRecurringPayment";
-            isRecurringPaymentDataGridViewCheckBoxColumn.HeaderText = "IsRecurringPayment";
-            isRecurringPaymentDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            isRecurringPaymentDataGridViewCheckBoxColumn.Name = "isRecurringPaymentDataGridViewCheckBoxColumn";
-            isRecurringPaymentDataGridViewCheckBoxColumn.Visible = false;
-            isRecurringPaymentDataGridViewCheckBoxColumn.Width = 125;
-            // 
-            // isAutoPaySetupDataGridViewCheckBoxColumn
-            // 
-            isAutoPaySetupDataGridViewCheckBoxColumn.DataPropertyName = "IsAutoPaySetup";
-            isAutoPaySetupDataGridViewCheckBoxColumn.HeaderText = "IsAutoPaySetup";
-            isAutoPaySetupDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            isAutoPaySetupDataGridViewCheckBoxColumn.Name = "isAutoPaySetupDataGridViewCheckBoxColumn";
-            isAutoPaySetupDataGridViewCheckBoxColumn.Visible = false;
-            isAutoPaySetupDataGridViewCheckBoxColumn.Width = 125;
-            // 
-            // commentsDataGridViewTextBoxColumn
-            // 
-            commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
-            commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
-            commentsDataGridViewTextBoxColumn.MinimumWidth = 6;
-            commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
-            commentsDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // categoryDataGridViewTextBoxColumn
-            // 
-            categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
-            categoryDataGridViewTextBoxColumn.HeaderText = "Category";
-            categoryDataGridViewTextBoxColumn.MinimumWidth = 6;
-            categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
-            categoryDataGridViewTextBoxColumn.Width = 125;
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 470);
+            label1.Name = "label1";
+            label1.Size = new Size(256, 20);
+            label1.TabIndex = 8;
+            label1.Text = "Replaces monthly data with template";
             // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1078, 589);
+            ClientSize = new Size(1291, 589);
+            Controls.Add(label1);
+            Controls.Add(btnCopyTemplateToMonth);
             Controls.Add(btnDeleteTransaction);
             Controls.Add(btnBackToMain);
             Controls.Add(lblMonth);
             Controls.Add(btnNewTransaction);
             Controls.Add(btnSaveTransactions);
             Controls.Add(dataGridView1);
-            Controls.Add(textBox1);
+            Controls.Add(txtCurrentFunds);
             Name = "MonthViewDashboard";
             Text = "MonthViewDashboard";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -232,7 +265,7 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox txtCurrentFunds;
         private DataGridView dataGridView1;
         private BindingSource transactionBindingSource;
         private Button btnSaveTransactions;
@@ -240,15 +273,18 @@
         private Label lblMonth;
         private Button btnBackToMain;
         private Button btnDeleteTransaction;
+        private Button btnCopyTemplateToMonth;
         private DataGridViewTextBoxColumn transactionMonth;
         private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn Type;
         private DataGridViewTextBoxColumn paymentEstimatedDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn paymentActualDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn isPaidDataGridViewCheckBoxColumn;
         private DataGridViewCheckBoxColumn isRecurringPaymentDataGridViewCheckBoxColumn;
         private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
-        private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
+        private Label label1;
     }
 }

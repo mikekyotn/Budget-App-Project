@@ -53,9 +53,13 @@ namespace Budget_App_Project
             if (other == null) return false;
             return (this.Id.Equals(other.Id));
         }
+    } 
+    public class FundsData
+    {
+        public TransactionMonth? transactionMonth { get; set; }
+        public decimal AvailableFunds { get; set; }
+        public decimal EstimatedRemainingFunds { get; set; }
     }
-
-    
     public enum TransactionMonth
     {
         TEMPLATE, January, February, March, April, May, June, 
@@ -65,16 +69,14 @@ namespace Budget_App_Project
     {
         Bill, Income
     }
-    
-
     //List for ALL transactions accessible by all forms, static so no instantiation required
     public static class AllTransactionData
     {
         //This is a List and not a BindingList so that it's easier to filter and then
         //wrap the filtered list into a BindingList to use as a DataSource
         public static List<Transaction> TransactionList = new List<Transaction>();
+        public static List<FundsData> MonthlyFundsList = new List<FundsData>();
     }
-
     public static class MonthTemplate
     {
         public static List<Transaction> TemplateMaster = new List<Transaction>();
