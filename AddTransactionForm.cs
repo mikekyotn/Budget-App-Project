@@ -29,6 +29,7 @@ namespace Budget_App_Project
             cbBoxPaymentDay.SelectedItem = days[0];
             txtActPayment.Text = "0";
         }
+        //This is for the Cancel button
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -38,23 +39,44 @@ namespace Budget_App_Project
         // entries for decimal data types and required values.
         private void btnSave_Click(object sender, EventArgs e)
         {
-            TransactionMonth month = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblHeaderMonth.Text);
             uint day = (uint)cbBoxPaymentDay.SelectedItem;
             TransactionType type = (TransactionType)cbBoxTransactType.SelectedItem;
-            AllTransactionData.TransactionList.Add(
-                new Transaction(
-                day,
-                month,
-                decimal.Parse(txtEstPayment.Text),
-                txtDescription.Text,
-                false,
-                false,
-                chkBoxPayComplete.Checked,
-                decimal.Parse(txtActPayment.Text),
-                type,
-                txtComments.Text,
-                "User-added"
-                ));            
+            if (lblHeaderMonth.Text == "TEMPLATE")
+            {
+                //PROBLEM: TROUBLE WITH MONTH FOR TEMPLATE CODE IS BROKEN HERE
+                MonthTemplate.TemplateMaster.Add(
+                    new Transaction(
+                    day,
+                    TransactionMonth.TEMPLATE, 
+                    decimal.Parse(txtEstPayment.Text),
+                    txtDescription.Text,
+                    true,
+                    false,
+                    chkBoxPayComplete.Checked,
+                    decimal.Parse(txtActPayment.Text),
+                    type,
+                    txtComments.Text,
+                    "User-added"
+                    ));
+            }
+            else
+            {
+                TransactionMonth thisMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblHeaderMonth.Text);                
+                AllTransactionData.TransactionList.Add(
+                    new Transaction(
+                    day,
+                    thisMonth,
+                    decimal.Parse(txtEstPayment.Text),
+                    txtDescription.Text,
+                    false,
+                    false,
+                    chkBoxPayComplete.Checked,
+                    decimal.Parse(txtActPayment.Text),
+                    type,
+                    txtComments.Text,
+                    "User-added"
+                    ));
+            }
             this.Close();
         }
     }

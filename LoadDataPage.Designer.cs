@@ -29,27 +29,20 @@
         private void InitializeComponent()
         {
             btnLoadMonth = new Button();
-            lstMonths = new ListBox();
             btnExit = new Button();
+            cbBoxMonth = new ComboBox();
+            btnLoadTemplateFromFile = new Button();
             SuspendLayout();
             // 
             // btnLoadMonth
             // 
-            btnLoadMonth.Location = new Point(536, 58);
+            btnLoadMonth.Location = new Point(295, 95);
             btnLoadMonth.Name = "btnLoadMonth";
             btnLoadMonth.Size = new Size(232, 29);
             btnLoadMonth.TabIndex = 0;
             btnLoadMonth.Text = "Load Month";
             btnLoadMonth.UseVisualStyleBackColor = true;
             btnLoadMonth.Click += btnLoadMonth_Click;
-            // 
-            // lstMonths
-            // 
-            lstMonths.FormattingEnabled = true;
-            lstMonths.Location = new Point(446, 58);
-            lstMonths.Name = "lstMonths";
-            lstMonths.Size = new Size(84, 184);
-            lstMonths.TabIndex = 1;
             // 
             // btnExit
             // 
@@ -61,13 +54,32 @@
             btnExit.UseVisualStyleBackColor = true;
             btnExit.Click += btnExit_Click;
             // 
+            // cbBoxMonth
+            // 
+            cbBoxMonth.FormattingEnabled = true;
+            cbBoxMonth.Location = new Point(542, 96);
+            cbBoxMonth.Name = "cbBoxMonth";
+            cbBoxMonth.Size = new Size(151, 28);
+            cbBoxMonth.TabIndex = 3;
+            // 
+            // btnLoadTemplateFromFile
+            // 
+            btnLoadTemplateFromFile.Location = new Point(301, 138);
+            btnLoadTemplateFromFile.Name = "btnLoadTemplateFromFile";
+            btnLoadTemplateFromFile.Size = new Size(226, 29);
+            btnLoadTemplateFromFile.TabIndex = 4;
+            btnLoadTemplateFromFile.Text = "Load Template";
+            btnLoadTemplateFromFile.UseVisualStyleBackColor = true;
+            btnLoadTemplateFromFile.Click += btnLoadTemplateFromFile_Click;
+            // 
             // LoadDataPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnLoadTemplateFromFile);
+            Controls.Add(cbBoxMonth);
             Controls.Add(btnExit);
-            Controls.Add(lstMonths);
             Controls.Add(btnLoadMonth);
             Name = "LoadDataPage";
             Text = "LoadDataPage";
@@ -77,7 +89,8 @@
         #endregion
 
         private Button btnLoadMonth;
-        private ListBox lstMonths;
         private Button btnExit;
+        private ComboBox cbBoxMonth;
+        private Button btnLoadTemplateFromFile;
     }
 }

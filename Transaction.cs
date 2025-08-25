@@ -13,7 +13,7 @@ namespace Budget_App_Project
     {
         public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
-        public  TransactionMonth transactionMonth { get; set;  }    // required
+        public  TransactionMonth? transactionMonth { get; set;  }    // required
         public decimal PaymentEstimated { get; set; } //required
         public string? Description { get; set; } //who's getting paid or paying - required
         public bool IsRecurringPayment { get; set; } // optional default true
@@ -55,9 +55,11 @@ namespace Budget_App_Project
         }
     }
 
+    
     public enum TransactionMonth
     {
-        January, February, March, April, May, June, July, August, September, October, November, December
+        TEMPLATE, January, February, March, April, May, June, 
+        July, August, September, October, November, December
     }
     public enum TransactionType
     {
@@ -68,8 +70,14 @@ namespace Budget_App_Project
     //List for ALL transactions accessible by all forms, static so no instantiation required
     public static class AllTransactionData
     {
-        //public static BindingList<Transaction> TransactionList = new BindingList<Transaction>();
+        //This is a List and not a BindingList so that it's easier to filter and then
+        //wrap the filtered list into a BindingList to use as a DataSource
         public static List<Transaction> TransactionList = new List<Transaction>();
+    }
+
+    public static class MonthTemplate
+    {
+        public static List<Transaction> TemplateMaster = new List<Transaction>();
     }
 
       
