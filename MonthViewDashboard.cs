@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -23,16 +24,27 @@ namespace Budget_App_Project
             //or a BindingList filtered on the month desired from the AllTransactionData
             if (month == "TEMPLATE")
             {
-                MonthTemplate.TemplateMaster = LoadFromFile("Template.json");
+                //MonthTemplate.TemplateMaster = LoadFromFile("Template.json");
+                LoadTemplateFromFile("Template.json");
                 UpdateTemplateDataSource();
                 btnCopyTemplateToMonth.Enabled = false;
             }
             else
             {
-                AllTransactionData.TransactionList = LoadFromFile("AllTransactions.json");
+                LoadTransactionListFromFile("AllTransactions.json");                
                 FilterAndUpdateDataSource(month);
+                txtCurrentFunds.Text = GetCurrentFunds(month).ToString();
             }
             lblMonth.Text = month;
+        }
+        public decimal GetCurrentFunds (string month)
+        {
+            TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
+            if (AllTransactionData.MonthlyFundsList.ContainsKey(enumMonth))
+            {
+                return AllTransactionData.MonthlyFundsList[enumMonth];
+            }
+            else { return 0; }
         }
         public void UpdateTemplateDataSource()
         {
@@ -49,45 +61,82 @@ namespace Budget_App_Project
         {
             return @"d:\G5ProgSpace\BudgetAppFiles";
         }
-        public List<Transaction> LoadFromFile(string fileName)
+        public void LoadTemplateFromFile(string fileName)
         {
             string folderPath = GetFolderPath();
             string filePath = Path.Combine(folderPath, fileName);
-            if (File.Exists(filePath))
+            if (!File.Exists(filePath))
+                return;
+            else
             {
                 var json = File.ReadAllText(filePath);
-                var transactList = JsonSerializer.Deserialize<List<Transaction>>(json);
-                return new List<Transaction>(transactList);
+                MonthTemplate.TemplateMaster = JsonSerializer.Deserialize<List<Transaction>>(json);
+                //return new List<Transaction>(transactList);                
             }
-            return new List<Transaction>();
+            //return new List<Transaction>();
+        }
+        public void LoadTransactionListFromFile(string fileName)
+        {
+            string folderPath = GetFolderPath();
+            string filePath = Path.Combine(folderPath, fileName);
+            if (!File.Exists(filePath)) return;
+
+            string json = File.ReadAllText(filePath);
+            var loadedMirror = JsonSerializer.Deserialize<MirrorAllTransactionData>(json);
+
+            if (loadedMirror != null) 
+            {
+                //assign data to the static Lists if null make new empty lists
+                AllTransactionData.TransactionList = loadedMirror.TransactionList ?? new();
+                AllTransactionData.MonthlyFundsList = loadedMirror.MonthlyFundsList ?? new();
+            }
         }
         private void btnSaveTransactions_Click(object sender, EventArgs e)
         {
             string folderPath = GetFolderPath();
-            List<Transaction> transactionsToPrintList = new List<Transaction>();
+            //List<Transaction> transactionsToPrintList = new List<Transaction>();
             string fileName;
 
             if (lblMonth.Text == "TEMPLATE")
             {
                 fileName = "Template.json";
-                transactionsToPrintList = MonthTemplate.TemplateMaster;
+                string filePath = Path.Combine(folderPath, fileName);
+                List<Transaction> transactionsToPrintList = MonthTemplate.TemplateMaster;                
+                if (transactionsToPrintList != null)
+                {
+                    var json = JsonSerializer.Serialize(transactionsToPrintList, new JsonSerializerOptions
+                    { WriteIndented = true });
+                    File.WriteAllText(filePath, json);
+                }
             }
             else
             {
+                TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
                 fileName = "AllTransactions.json";
-                transactionsToPrintList = AllTransactionData.TransactionList;
-                
-            }
-            string filePath = Path.Combine(folderPath, fileName);
-            if (transactionsToPrintList != null)
-            {
-                var json = JsonSerializer.Serialize(transactionsToPrintList, new JsonSerializerOptions
+                string filePath = Path.Combine(folderPath, fileName);                
+                if (AllTransactionData.MonthlyFundsList.ContainsKey(enumMonth))
                 {
-                    WriteIndented = true
-                });
+                    AllTransactionData.MonthlyFundsList[enumMonth] = decimal.Parse(txtCurrentFunds.Text);
+                }
+                else
+                {
+                    AllTransactionData.MonthlyFundsList.Add(enumMonth, decimal.Parse(txtCurrentFunds.Text));
+                }
+                    //AllTransactionData.MonthlyFundsList.Add(new FundsData
+                    //{
+                    //    transactionMonth = enumMonth,
+                    //    AvailableFunds = decimal.Parse(txtCurrentFunds.Text)
+                    //});
+                    //transactionsToPrintList = AllTransactionData.TransactionList;
+                    var mirror = new MirrorAllTransactionData
+                    {
+                        TransactionList = AllTransactionData.TransactionList,
+                        MonthlyFundsList = AllTransactionData.MonthlyFundsList
+                    };
+                string json = JsonSerializer.Serialize(mirror, new JsonSerializerOptions 
+                { WriteIndented = true });
                 File.WriteAllText(filePath, json);
-            }
-        }
+            }        }
         private void btnNewTransaction_Click(object sender, EventArgs e)
         {
             AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
@@ -131,11 +180,11 @@ namespace Budget_App_Project
                 AllTransactionData.TransactionList.Remove(selectedTransaction);
                 FilterAndUpdateDataSource(lblMonth.Text);
             }
-        }
-        //Deletes all transactions in the AllTransactionData for the month
-        //Writes the Template into this month with the TransactionMonth updated
+        }        
         private void btnCopyTemplateToMonth_Click(object sender, EventArgs e)
         {
+            //Deletes all transactions in the AllTransactionData for the month
+            //Writes the Template into this month with the TransactionMonth updated
             var confirmOverwrite = MessageBox.Show(
                 $"All transactions will be overwritten for {lblMonth.Text}.\n" +
                 $"Are you sure you want to load the TEMPLATE into {lblMonth.Text}?",
@@ -146,7 +195,7 @@ namespace Budget_App_Project
             if (confirmOverwrite == DialogResult.Yes)
             {
                 //Load the Template because it may not be loaded yet
-                MonthTemplate.TemplateMaster = LoadFromFile("Template.json");
+                LoadTemplateFromFile("Template.json");
                 TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
                 AllTransactionData.TransactionList.RemoveAll(t => t.transactionMonth == enumMonth);
                 foreach (Transaction temp in MonthTemplate.TemplateMaster)

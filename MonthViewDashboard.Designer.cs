@@ -60,7 +60,7 @@
             txtCurrentFunds.Name = "txtCurrentFunds";
             txtCurrentFunds.Size = new Size(314, 27);
             txtCurrentFunds.TabIndex = 0;
-            txtCurrentFunds.Text = "CurrentAvailableFunds";
+            txtCurrentFunds.Text = "0";
             // 
             // dataGridView1
             // 

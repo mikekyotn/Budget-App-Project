@@ -58,7 +58,15 @@ namespace Budget_App_Project
     {
         public TransactionMonth? transactionMonth { get; set; }
         public decimal AvailableFunds { get; set; }
-        public decimal EstimatedRemainingFunds { get; set; }
+        
+        public FundsData(TransactionMonth month, decimal currentFunds = 0)
+        {
+            transactionMonth = month;
+            AvailableFunds = currentFunds;
+        }
+        public FundsData()
+        { }
+         
     }
     public enum TransactionMonth
     {
@@ -75,13 +83,20 @@ namespace Budget_App_Project
         //This is a List and not a BindingList so that it's easier to filter and then
         //wrap the filtered list into a BindingList to use as a DataSource
         public static List<Transaction> TransactionList = new List<Transaction>();
-        public static List<FundsData> MonthlyFundsList = new List<FundsData>();
-    }
-    public static class MonthTemplate
-    {
-        public static List<Transaction> TemplateMaster = new List<Transaction>();
+        //public static List<FundsData> MonthlyFundsList = new List<FundsData>();
+        public static Dictionary<TransactionMonth, decimal>MonthlyFundsList = new Dictionary<TransactionMonth, decimal>();
     }
 
-      
+    public class MirrorAllTransactionData
+    {
+        public List<Transaction> TransactionList { get; set; }
+        //public List<FundsData> MonthlyFundsList { get; set; }
+        public Dictionary<TransactionMonth, decimal> MonthlyFundsList { get; set; }
+    }
+
+    public static class MonthTemplate
+    {
+        public static List<Transaction> TemplateMaster = new List<Transaction>();        
+    }    
     
 }
