@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Budget_App_Project
                 LoadTemplateFromFile("Template.json");
                 UpdateTemplateDataSource();
                 btnCopyTemplateToMonth.Enabled = false;
+                txtCurrentFunds.Enabled = false;
             }
             else
             {
@@ -35,8 +37,21 @@ namespace Budget_App_Project
                 FilterAndUpdateDataSource(month);
                 txtCurrentFunds.Text = GetCurrentFunds(month).ToString();
             }
+            dataGridView1.DataError += DataGridView_DataError;
+            dataGridView1.CellFormatting += DataGridViewCellFormatting;
             lblMonth.Text = month;
             CalculateTotalsForDashboard();
+        }
+        private void DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {            
+            e.ThrowException = false; //prevent error message from appearing
+            MessageBox.Show(
+                $"You entered an INVALID entry at column {e.ColumnIndex}, row {e.RowIndex}.\n" +
+                $"You cannot continue until you update.",
+                "Acknowledge",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+                );
         }
         public decimal GetCurrentFunds (string month)
         {
@@ -111,51 +126,67 @@ namespace Budget_App_Project
                 }
             }
             lblEstimatedEndBalance.Text = "5";
-            lblIncomeBudgeted.Text = incomeEstimatedTotal.ToString();
-            lblIncomeActual.Text = incomeActualTotal.ToString();
-            lblExpenseBudgeted.Text = expenseEstimatedTotal.ToString();
-            lblExpenseActual.Text = expenseActualTotal.ToString();
+            lblIncomeBudgeted.Text = incomeEstimatedTotal.ToString("C2");
+            lblIncomeActual.Text = incomeActualTotal.ToString("C2");
+            lblExpenseBudgeted.Text = expenseEstimatedTotal.ToString("C2");
+            lblExpenseActual.Text = expenseActualTotal.ToString("C2");
         }
         private void btnSaveTransactions_Click(object sender, EventArgs e)
         {
             string folderPath = GetFolderPath();
-            //List<Transaction> transactionsToPrintList = new List<Transaction>();
-            string fileName;
-
-            if (lblMonth.Text == "TEMPLATE")
+            //check if the value entered for CurrentFunds can be parsed into decimal
+            //if it can save if it can't don't save and return message to fix
+            decimal currentFunds = 0;
+            if (decimal.TryParse(txtCurrentFunds.Text, out currentFunds))
             {
-                fileName = "Template.json";
-                string filePath = Path.Combine(folderPath, fileName);
-                List<Transaction> transactionsToPrintList = MonthTemplate.TemplateMaster;                
-                if (transactionsToPrintList != null)
+                string fileName;
+                if (lblMonth.Text == "TEMPLATE")
                 {
-                    var json = JsonSerializer.Serialize(transactionsToPrintList, new JsonSerializerOptions
+                    fileName = "Template.json";
+                    string filePath = Path.Combine(folderPath, fileName);
+                    List<Transaction> transactionsToPrintList = MonthTemplate.TemplateMaster;
+                    if (transactionsToPrintList != null)
+                    {
+                        var json = JsonSerializer.Serialize(transactionsToPrintList, new JsonSerializerOptions
+                        { WriteIndented = true });
+                        File.WriteAllText(filePath, json);
+                    }
+                }
+                else
+                {
+                    TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
+                    fileName = "AllTransactions.json";
+                    string filePath = Path.Combine(folderPath, fileName);
+                    if (AllTransactionData.MonthlyFundsList.ContainsKey(enumMonth))
+                    {
+                        AllTransactionData.MonthlyFundsList[enumMonth] = currentFunds;
+                    }
+                    else
+                    {
+                        AllTransactionData.MonthlyFundsList.Add(enumMonth, currentFunds);
+                    }
+                    var mirror = new MirrorAllTransactionData
+                    {
+                        TransactionList = AllTransactionData.TransactionList,
+                        MonthlyFundsList = AllTransactionData.MonthlyFundsList
+                    };
+                    string json = JsonSerializer.Serialize(mirror, new JsonSerializerOptions
                     { WriteIndented = true });
                     File.WriteAllText(filePath, json);
                 }
             }
             else
             {
-                TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblMonth.Text);
-                fileName = "AllTransactions.json";
-                string filePath = Path.Combine(folderPath, fileName);                
-                if (AllTransactionData.MonthlyFundsList.ContainsKey(enumMonth))
-                {
-                    AllTransactionData.MonthlyFundsList[enumMonth] = decimal.Parse(txtCurrentFunds.Text);
-                }
-                else
-                {
-                    AllTransactionData.MonthlyFundsList.Add(enumMonth, decimal.Parse(txtCurrentFunds.Text));
-                }
-                    var mirror = new MirrorAllTransactionData
-                    {
-                        TransactionList = AllTransactionData.TransactionList,
-                        MonthlyFundsList = AllTransactionData.MonthlyFundsList
-                    };
-                string json = JsonSerializer.Serialize(mirror, new JsonSerializerOptions 
-                { WriteIndented = true });
-                File.WriteAllText(filePath, json);
-            }        }
+                MessageBox.Show(
+                $"Unable to Save \n" +
+                $"Invalid Entry at: Current Funds Available\n" +
+                "Please ensure it is a decimal value",
+                "Error Saving",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+                );
+            }
+        }
         private void btnNewTransaction_Click(object sender, EventArgs e)
         {
             AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
@@ -173,7 +204,7 @@ namespace Budget_App_Project
             var confirmBackToMain = MessageBox.Show(
                 $"Any unsaved changes will be discarded.\n" +
                 $"Are you sure you want EXIT this screen back to Main?",
-                "Confirm Deletion",
+                "Return to Main",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning
                 );
@@ -235,6 +266,22 @@ namespace Budget_App_Project
                     });
                 }
                 FilterAndUpdateDataSource(lblMonth.Text);
+                CalculateTotalsForDashboard();
+            }
+        }
+        private void DataGridViewCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "paymentEstimatedDataGridViewTextBoxColumn" && e.Value != null)
+            {
+                decimal value = (decimal)e.Value;
+                e.Value = value.ToString("C2", new System.Globalization.CultureInfo("en-US"));
+                e.FormattingApplied = true;
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "paymentActualDataGridViewTextBoxColumn" && e.Value != null)
+            {
+                decimal value = (decimal)e.Value;
+                e.Value = value.ToString("C2", new System.Globalization.CultureInfo("en-US"));
+                e.FormattingApplied = true;
             }
         }
     }

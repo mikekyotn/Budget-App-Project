@@ -61,15 +61,16 @@
             lblExpenseBudgeted = new Label();
             lblIncomeActual = new Label();
             lblExpenseActual = new Label();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
             // 
             // txtCurrentFunds
             // 
-            txtCurrentFunds.Location = new Point(12, 39);
+            txtCurrentFunds.Location = new Point(80, 39);
             txtCurrentFunds.Name = "txtCurrentFunds";
-            txtCurrentFunds.Size = new Size(166, 27);
+            txtCurrentFunds.Size = new Size(98, 27);
             txtCurrentFunds.TabIndex = 0;
             txtCurrentFunds.Text = "0";
             txtCurrentFunds.TextAlign = HorizontalAlignment.Right;
@@ -352,11 +353,21 @@
             lblExpenseActual.Text = "Amount";
             lblExpenseActual.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(61, 42);
+            label8.Name = "label8";
+            label8.Size = new Size(17, 20);
+            label8.TabIndex = 20;
+            label8.Text = "$";
+            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1291, 589);
+            Controls.Add(label8);
             Controls.Add(lblExpenseActual);
             Controls.Add(lblIncomeActual);
             Controls.Add(lblExpenseBudgeted);
@@ -419,5 +430,6 @@
         private Label lblExpenseBudgeted;
         private Label lblIncomeActual;
         private Label lblExpenseActual;
+        private Label label8;
     }
 }
