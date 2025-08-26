@@ -28,10 +28,10 @@ namespace Budget_App_Project
             cbBoxTransactType.SelectedItem = TransactionType.Bill;
             cbBoxPaymentDay.SelectedItem = days[0];
             txtActPayment.Text = "0";
-        }
-        //This is for the Cancel button
+        }        
         private void button1_Click(object sender, EventArgs e)
         {
+            //This is for the Cancel button
             this.Close();
         }
 

@@ -19,7 +19,7 @@ namespace Budget_App_Project
         public bool IsRecurringPayment { get; set; } // optional default true
         public bool IsAutoPaySetup { get; set; } //optional default false
         public bool IsPaid { get; set; } //optional default false                
-        public decimal? PaymentActual { get; set; } //optional default 0        
+        public decimal PaymentActual { get; set; } //optional default 0        
         public TransactionType Type { get; set; } //is this a bill or income - required
         public string? Comments { get; set; } // optional default ""        
         public string? Category { get; set; } //initially user defined, may make enum later optional default "undefined"
@@ -47,27 +47,12 @@ namespace Budget_App_Project
         {
             Id = Guid.NewGuid();
         }
-
         public bool Equals(Transaction? other)
         {
             if (other == null) return false;
             return (this.Id.Equals(other.Id));
         }
-    } 
-    public class FundsData
-    {
-        public TransactionMonth? transactionMonth { get; set; }
-        public decimal AvailableFunds { get; set; }
-        
-        public FundsData(TransactionMonth month, decimal currentFunds = 0)
-        {
-            transactionMonth = month;
-            AvailableFunds = currentFunds;
-        }
-        public FundsData()
-        { }
-         
-    }
+    }  
     public enum TransactionMonth
     {
         TEMPLATE, January, February, March, April, May, June, 
@@ -83,20 +68,16 @@ namespace Budget_App_Project
         //This is a List and not a BindingList so that it's easier to filter and then
         //wrap the filtered list into a BindingList to use as a DataSource
         public static List<Transaction> TransactionList = new List<Transaction>();
-        //public static List<FundsData> MonthlyFundsList = new List<FundsData>();
         public static Dictionary<TransactionMonth, decimal>MonthlyFundsList = new Dictionary<TransactionMonth, decimal>();
     }
-
     public class MirrorAllTransactionData
     {
+        //used for writing to file with json, cannot write json direct from static class
         public List<Transaction> TransactionList { get; set; }
-        //public List<FundsData> MonthlyFundsList { get; set; }
         public Dictionary<TransactionMonth, decimal> MonthlyFundsList { get; set; }
     }
-
     public static class MonthTemplate
     {
         public static List<Transaction> TemplateMaster = new List<Transaction>();        
     }    
-    
 }

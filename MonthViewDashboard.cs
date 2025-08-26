@@ -36,6 +36,7 @@ namespace Budget_App_Project
                 txtCurrentFunds.Text = GetCurrentFunds(month).ToString();
             }
             lblMonth.Text = month;
+            CalculateTotalsForDashboard();
         }
         public decimal GetCurrentFunds (string month)
         {
@@ -70,10 +71,8 @@ namespace Budget_App_Project
             else
             {
                 var json = File.ReadAllText(filePath);
-                MonthTemplate.TemplateMaster = JsonSerializer.Deserialize<List<Transaction>>(json);
-                //return new List<Transaction>(transactList);                
+                MonthTemplate.TemplateMaster = JsonSerializer.Deserialize<List<Transaction>>(json);               
             }
-            //return new List<Transaction>();
         }
         public void LoadTransactionListFromFile(string fileName)
         {
@@ -90,6 +89,32 @@ namespace Budget_App_Project
                 AllTransactionData.TransactionList = loadedMirror.TransactionList ?? new();
                 AllTransactionData.MonthlyFundsList = loadedMirror.MonthlyFundsList ?? new();
             }
+        }
+        private void CalculateTotalsForDashboard()
+        {
+            decimal incomeEstimatedTotal = 0;
+            decimal incomeActualTotal = 0;
+            decimal expenseEstimatedTotal = 0;
+            decimal expenseActualTotal = 0;
+            var data = (BindingList<Transaction>)dataGridView1.DataSource;
+            foreach (var t in data)
+            {
+                if (t.Type == TransactionType.Income)
+                {
+                    incomeEstimatedTotal += t.PaymentEstimated;
+                    incomeActualTotal += t.PaymentActual;
+                }
+                else
+                {
+                    expenseEstimatedTotal += t.PaymentEstimated;
+                    expenseActualTotal += t.PaymentActual;
+                }
+            }
+            lblEstimatedEndBalance.Text = "5";
+            lblIncomeBudgeted.Text = incomeEstimatedTotal.ToString();
+            lblIncomeActual.Text = incomeActualTotal.ToString();
+            lblExpenseBudgeted.Text = expenseEstimatedTotal.ToString();
+            lblExpenseActual.Text = expenseActualTotal.ToString();
         }
         private void btnSaveTransactions_Click(object sender, EventArgs e)
         {
@@ -122,12 +147,6 @@ namespace Budget_App_Project
                 {
                     AllTransactionData.MonthlyFundsList.Add(enumMonth, decimal.Parse(txtCurrentFunds.Text));
                 }
-                    //AllTransactionData.MonthlyFundsList.Add(new FundsData
-                    //{
-                    //    transactionMonth = enumMonth,
-                    //    AvailableFunds = decimal.Parse(txtCurrentFunds.Text)
-                    //});
-                    //transactionsToPrintList = AllTransactionData.TransactionList;
                     var mirror = new MirrorAllTransactionData
                     {
                         TransactionList = AllTransactionData.TransactionList,
