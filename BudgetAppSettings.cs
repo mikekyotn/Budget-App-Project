@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -8,28 +9,25 @@ using System.Threading.Tasks;
 
 namespace Budget_App_Project
 {
+    //Used to enable user to change location of save location and it be persistent 
     public class BudgetAppSettings
     {
-        public List<string> CategoryList { get; set; } 
+        public BindingList<string> CategoryList { get; set; } 
         public string UserFolderPath { get; set; } //where user wants template and alltransacs files
 
         public BudgetAppSettings() 
         { 
-            CategoryList = new List<string>
+            CategoryList = new BindingList<string>
         { "Paycheck", "Investment Returns", "Gift",
         "Credit Card", "Entertainment", "Insurance", "Loan", "Rent", "Tax", "Utilities",
         "Other"};
-            //UserFolderPath = @"d:"; 
-            //UserFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             UserFolderPath = string.Empty;
         }
     }
     public static class AppSettingsManager
     {
         public static BudgetAppSettings UserSettings { get; set; } = new();
-        public static string fileName = "BudgetAppSettings.json";
-        //public static string filePath = Path.Combine(UserSettings.UserFolderPath, fileName);
-                
+        public static string fileName = "BudgetAppSettings.json";                
         public static void AskUserForSavePath()
         {
             using var dialog = new FolderBrowserDialog
@@ -41,6 +39,7 @@ namespace Budget_App_Project
                 UserSettings.UserFolderPath = dialog.SelectedPath;                
             }            
         }
+        //this saves the SETTINGS at a know location, not the location of the template and transaction files
         public static void SaveAppSettings(BudgetAppSettings settings)
         {
             string settingsFileFolder = Path.Combine(

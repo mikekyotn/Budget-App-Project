@@ -15,6 +15,7 @@ namespace Budget_App_Project
         private decimal paymentEstimated;
         private decimal paymentActual;
         private bool isPaid;
+        private TransactionType type;
         public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
         public  TransactionMonth? transactionMonth { get; set;  }    // required
@@ -57,7 +58,18 @@ namespace Budget_App_Project
                 }
             }
         }         
-        public TransactionType Type { get; set; }
+        public TransactionType Type
+        {
+            get { return type; }
+            set
+            {
+                if (type != value)
+                {
+                    type = value;
+                    OnPropertyChanged(nameof(Type));
+                }
+            }
+        }
         public string Comments { get; set; } = string.Empty; // optional default ""        
         public string Category { get; set; } = string.Empty; 
         

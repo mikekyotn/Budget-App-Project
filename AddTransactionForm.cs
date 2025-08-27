@@ -12,8 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Budget_App_Project
-{
-    public partial class AddTransactionForm : Form
+{    public partial class AddTransactionForm : Form
     {
         public AddTransactionForm(string month)
         {
@@ -29,15 +28,14 @@ namespace Budget_App_Project
             cbBoxCategory.DataSource = AppSettingsManager.UserSettings.CategoryList;
             lblHeaderMonth.Text = month;       
             txtActPayment.Text = "0";
-        }        
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //This is for the Cancel button
-            this.Close();
         }
 
-        //UPDATE: this works, but need to come back to add some error handling of
-        // entries for decimal data types and required values.
+        //This is for the Cancel button
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            this.Close();
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool validInput = true;            

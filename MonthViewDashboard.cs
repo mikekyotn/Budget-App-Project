@@ -41,6 +41,8 @@ namespace Budget_App_Project
             }
             dataGridView1.DataError += DataGridView_DataError; //handle invalid data type entered
             dataGridView1.CellFormatting += DataGridViewCellFormatting; //show decimal values as currency
+            //dataGridView1.EditingControlShowing += DataGridViewEditingControlShowing; //allow typing into Category combobox
+            //dataGridView1.CellValidating += DataGridViewCellValidating; //check for changes to Category combobox
             lblMonth.Text = month;
             lblDeleteInstructions.Text = "Click on any cell in a row then click button to delete row";
             ReplaceEnumColumnWithCombo<TransactionType>(dataGridView1, "Type", "Type", 3); //ComboBox
@@ -173,7 +175,7 @@ namespace Budget_App_Project
         {
             string folderPath = GetFolderPath();
             //check if the value entered for CurrentFunds can be parsed into decimal
-            //if it can save if it can't don't save and return message to fix
+            //if it can save; if it can't don't save and return message to fix
             decimal currentFunds = 0;
             if (decimal.TryParse(txtCurrentFunds.Text, out currentFunds))
             {
@@ -229,8 +231,6 @@ namespace Budget_App_Project
         {
             AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
             addNewTransaction.ShowDialog();
-            
-
             if (lblMonth.Text == "TEMPLATE")
                 //Only update required for dataGridView datasource
                 UpdateTemplateDataSource();                
@@ -310,6 +310,7 @@ namespace Budget_App_Project
                 CalculateTotalsForDashboard();
             }
         }
+        //makes the decimal type Payment properties show as currency values in the gridview
         private void DataGridViewCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex].Name == "paymentEstimatedDataGridViewTextBoxColumn" && e.Value != null)
@@ -325,6 +326,31 @@ namespace Budget_App_Project
                 e.FormattingApplied = true;
             }
         }
+        //Adds a new category to the BindingList Category if change user enters new value
+        private void DataGridViewCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            var grid = sender as DataGridView;
+
+            if (grid.Columns[e.ColumnIndex].Name == "Category")
+            {
+                string newValue = e.FormattedValue?.ToString()?.Trim();
+
+                if (!string.IsNullOrWhiteSpace(newValue) && !AppSettingsManager.UserSettings.CategoryList.Contains(newValue))
+                {
+                    AppSettingsManager.UserSettings.CategoryList.Add(newValue);
+                }
+            }
+        }
+        //Enables the Category drop down box in the dataGridView to be typed into for a new category
+        private void DataGridViewEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dataGridView1.CurrentCell.ColumnIndex == dataGridView1.Columns["Category"].Index &&
+                e.Control is ComboBox combo)
+            {
+                combo.DropDownStyle = ComboBoxStyle.DropDown; // Allows typing
+            }
+        }
+        //Enables Enum Type to be used in a combobox in the gridview
         public void ReplaceEnumColumnWithCombo<T>(DataGridView grid, string propertyName, string headerName, int index)
         {
             grid.Columns.Remove(propertyName);
@@ -341,6 +367,7 @@ namespace Budget_App_Project
             };
             grid.Columns.Add(comboColumn);
         }
+        //enables Category to be a ComboBox with the source from UserSetting BindingList
         public void ReplaceCategoryColumnWithCombo(DataGridView grid)
         {
             grid.Columns.Remove("categoryDataGridViewTextBoxColumn");
@@ -351,7 +378,6 @@ namespace Budget_App_Project
                 Name = "Category",
                 HeaderText = "Category",
                 DataSource = AppSettingsManager.UserSettings.CategoryList,
-                //ValueType = string,
                 DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
                 DisplayIndex = 7
             };
