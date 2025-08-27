@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
@@ -65,15 +67,21 @@ namespace Budget_App_Project
             else { return 0; }
         }
         public void UpdateTemplateDataSource()
-        {
+        {            
             List<Transaction> sortedList = MonthTemplate.TemplateMaster.OrderBy(t => t.DayOfMonthToPay).ToList();
-            dataGridView1.DataSource = new BindingList<Transaction>(sortedList);
+            var templateBindingList = new BindingList<Transaction>(sortedList);
+            templateBindingList.ListChanged += TransactionListChanged;
+            dataGridView1.DataSource = templateBindingList;
         }
         public void FilterAndUpdateDataSource(string month)
         {
             TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
             List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).OrderBy(t => t.DayOfMonthToPay).ToList();
-            dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
+            //dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
+            var filteredBindingList = new BindingList<Transaction>(filteredList);
+            filteredBindingList.ListChanged += TransactionListChanged;
+            dataGridView1.DataSource = filteredBindingList;
+
         }
         public string GetFolderPath()
         {
@@ -306,6 +314,15 @@ namespace Budget_App_Project
                 DisplayIndex = index
             };
             grid.Columns.Add(comboColumn);
+        }
+        private void TransactionListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemChanged)
+            {
+                var changedItem = ((BindingList<Transaction>)sender)[e.NewIndex];
+                //Console.WriteLine($"Transaction changed: {changedItem.Amount}");                                
+                CalculateTotalsForDashboard();
+            }
         }
 
     }

@@ -258,18 +258,20 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label2.Location = new Point(13, 10);
             label2.Name = "label2";
-            label2.Size = new Size(165, 20);
+            label2.Size = new Size(176, 20);
             label2.TabIndex = 9;
             label2.Text = "Current Funds Available";
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label3.Location = new Point(239, 10);
             label3.Name = "label3";
-            label3.Size = new Size(225, 20);
+            label3.Size = new Size(237, 20);
             label3.TabIndex = 10;
             label3.Text = "Estimated End of Month Balance";
             // 
@@ -286,36 +288,41 @@
             // label4
             // 
             label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label4.ForeColor = SystemColors.ControlText;
             label4.Location = new Point(371, 455);
             label4.Name = "label4";
-            label4.Size = new Size(117, 20);
+            label4.Size = new Size(123, 20);
             label4.TabIndex = 12;
             label4.Text = "Budgeted Totals";
             // 
             // label5
             // 
             label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label5.Location = new Point(516, 455);
             label5.Name = "label5";
-            label5.Size = new Size(94, 20);
+            label5.Size = new Size(100, 20);
             label5.TabIndex = 13;
             label5.Text = "Actual Totals";
             // 
             // label6
             // 
             label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label6.Location = new Point(293, 484);
             label6.Name = "label6";
-            label6.Size = new Size(58, 20);
+            label6.Size = new Size(61, 20);
             label6.TabIndex = 14;
             label6.Text = "Income";
             // 
             // label7
             // 
             label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label7.Location = new Point(282, 530);
             label7.Name = "label7";
-            label7.Size = new Size(69, 20);
+            label7.Size = new Size(73, 20);
             label7.TabIndex = 15;
             label7.Text = "Expenses";
             // 

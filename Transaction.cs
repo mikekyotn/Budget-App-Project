@@ -9,17 +9,41 @@ namespace Budget_App_Project
 {
     //This is a single transaction made in one monthly budget list.
     //A transaction can be used to pay a debtor or to recieve payment/paycheck.
-    public class Transaction : IEquatable<Transaction>
+    public class Transaction : IEquatable<Transaction>, INotifyPropertyChanged
     {
+        private decimal paymentEstimated;
+        private decimal paymentActual;
         public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
         public  TransactionMonth? transactionMonth { get; set;  }    // required
-        public decimal PaymentEstimated { get; set; } //required
+        public decimal PaymentEstimated 
+        {
+            get { return paymentEstimated; } 
+            set
+            {
+                if (paymentEstimated != value)
+                {
+                    paymentEstimated = value;
+                    OnPropertyChanged(nameof(PaymentEstimated));
+                }
+            }
+        } //required
         public string? Description { get; set; } //who's getting paid or paying - required
         public bool IsRecurringPayment { get; set; } // optional default true
         public bool IsAutoPaySetup { get; set; } //optional default false
         public bool IsPaid { get; set; } //optional default false                
-        public decimal PaymentActual { get; set; } //optional default 0        
+        public decimal PaymentActual 
+        { 
+            get { return paymentActual; }
+            set
+            {
+                if (paymentActual != value)
+                {
+                    paymentActual = value;
+                    OnPropertyChanged(nameof(PaymentActual));
+                }
+            }
+        } //optional default 0        
         public TransactionType Type { get; set; } //is this a bill or income - required
         public string? Comments { get; set; } // optional default ""        
         public string? Category { get; set; } //initially user defined, may make enum later optional default "undefined"
@@ -47,6 +71,9 @@ namespace Budget_App_Project
         {
             Id = Guid.NewGuid();
         }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         public bool Equals(Transaction? other)
         {
             if (other == null) return false;
