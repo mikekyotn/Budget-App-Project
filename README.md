@@ -1,3 +1,10 @@
 This is a budget tracking app made using WinForms.
 - .NET, C#, WinForms
-- Learning topics: json serialization/deserialization, data binding, CRUD, GUI, user flow, app design, OOP
+- Learned topics:
+- --json serialization/deserialization
+- --Interfaces: INotifyPropertyChanged, IComparer
+- --data binding: using master List of elements to be able to filter subsection into a BindingList which is then the DataSource for a dataGridView
+- --CRUD
+- --GUI, user interface flow
+- --app design
+- --OOP
