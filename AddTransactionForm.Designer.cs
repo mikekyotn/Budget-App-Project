@@ -247,7 +247,7 @@
             Controls.Add(lblHeaderMonth);
             Controls.Add(label1);
             Name = "AddTransactionForm";
-            Text = "AddTransactionForm";
+            Text = "Add Transaction";
             ResumeLayout(false);
             PerformLayout();
         }

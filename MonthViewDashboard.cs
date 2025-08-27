@@ -40,6 +40,8 @@ namespace Budget_App_Project
             dataGridView1.DataError += DataGridView_DataError;
             dataGridView1.CellFormatting += DataGridViewCellFormatting;
             lblMonth.Text = month;
+            lblDeleteInstructions.Text = "Click on any cell in a row then click button to delete row";
+            ReplaceEnumColumnWithCombo<TransactionType>(dataGridView1, "Type", "Type", 3);
             CalculateTotalsForDashboard();
         }
         private void DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -111,6 +113,7 @@ namespace Budget_App_Project
             decimal incomeActualTotal = 0;
             decimal expenseEstimatedTotal = 0;
             decimal expenseActualTotal = 0;
+            decimal estimatedMonthEndBalance = decimal.Parse(txtCurrentFunds.Text);
             var data = (BindingList<Transaction>)dataGridView1.DataSource;
             foreach (var t in data)
             {
@@ -118,14 +121,18 @@ namespace Budget_App_Project
                 {
                     incomeEstimatedTotal += t.PaymentEstimated;
                     incomeActualTotal += t.PaymentActual;
+                    if (t.IsPaid == false)
+                        estimatedMonthEndBalance += t.PaymentEstimated;
                 }
                 else
                 {
                     expenseEstimatedTotal += t.PaymentEstimated;
                     expenseActualTotal += t.PaymentActual;
+                    if (t.IsPaid == false)
+                        estimatedMonthEndBalance -= t.PaymentEstimated;
                 }
             }
-            lblEstimatedEndBalance.Text = "5";
+            lblEstimatedEndBalance.Text = estimatedMonthEndBalance.ToString("C2");
             lblIncomeBudgeted.Text = incomeEstimatedTotal.ToString("C2");
             lblIncomeActual.Text = incomeActualTotal.ToString("C2");
             lblExpenseBudgeted.Text = expenseEstimatedTotal.ToString("C2");
@@ -225,7 +232,7 @@ namespace Budget_App_Project
                 MonthTemplate.TemplateMaster.Remove(selectedTransaction);
                 UpdateTemplateDataSource();
             }
-            else
+            else if (confirmDelete == DialogResult.Yes)
             {
                 AllTransactionData.TransactionList.Remove(selectedTransaction);
                 FilterAndUpdateDataSource(lblMonth.Text);
@@ -284,5 +291,22 @@ namespace Budget_App_Project
                 e.FormattingApplied = true;
             }
         }
+        public void ReplaceEnumColumnWithCombo<EnumT>(DataGridView grid, string propertyName, string headerName, int index)
+        {
+            grid.Columns.Remove(propertyName);
+
+            var comboColumn = new DataGridViewComboBoxColumn
+            {
+                DataPropertyName = propertyName,
+                Name = propertyName,
+                HeaderText = headerName,
+                DataSource = Enum.GetValues(typeof(EnumT)),
+                ValueType = typeof(EnumT),
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
+                DisplayIndex = index
+            };
+            grid.Columns.Add(comboColumn);
+        }
+
     }
 }

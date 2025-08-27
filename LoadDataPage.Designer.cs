@@ -32,13 +32,15 @@
             btnExit = new Button();
             cbBoxMonth = new ComboBox();
             btnLoadTemplateFromFile = new Button();
+            label1 = new Label();
+            lblInstructions = new Label();
             SuspendLayout();
             // 
             // btnLoadMonth
             // 
-            btnLoadMonth.Location = new Point(527, 53);
+            btnLoadMonth.Location = new Point(320, 315);
             btnLoadMonth.Name = "btnLoadMonth";
-            btnLoadMonth.Size = new Size(232, 29);
+            btnLoadMonth.Size = new Size(220, 30);
             btnLoadMonth.TabIndex = 0;
             btnLoadMonth.Text = "Update Month";
             btnLoadMonth.UseVisualStyleBackColor = true;
@@ -46,7 +48,7 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(665, 391);
+            btnExit.Location = new Point(458, 12);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(94, 29);
             btnExit.TabIndex = 2;
@@ -57,33 +59,55 @@
             // cbBoxMonth
             // 
             cbBoxMonth.FormattingEnabled = true;
-            cbBoxMonth.Location = new Point(370, 54);
+            cbBoxMonth.Location = new Point(163, 316);
             cbBoxMonth.Name = "cbBoxMonth";
             cbBoxMonth.Size = new Size(151, 28);
             cbBoxMonth.TabIndex = 3;
             // 
             // btnLoadTemplateFromFile
             // 
-            btnLoadTemplateFromFile.Location = new Point(533, 148);
+            btnLoadTemplateFromFile.Location = new Point(320, 367);
             btnLoadTemplateFromFile.Name = "btnLoadTemplateFromFile";
-            btnLoadTemplateFromFile.Size = new Size(226, 29);
+            btnLoadTemplateFromFile.Size = new Size(220, 30);
             btnLoadTemplateFromFile.TabIndex = 4;
             btnLoadTemplateFromFile.Text = "Edit Template";
             btnLoadTemplateFromFile.UseVisualStyleBackColor = true;
             btnLoadTemplateFromFile.Click += btnLoadTemplateFromFile_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 35F, FontStyle.Bold);
+            label1.Location = new Point(49, 56);
+            label1.Name = "label1";
+            label1.Size = new Size(453, 78);
+            label1.TabIndex = 5;
+            label1.Text = "Budget Tracker";
+            // 
+            // lblInstructions
+            // 
+            lblInstructions.Location = new Point(103, 146);
+            lblInstructions.Name = "lblInstructions";
+            lblInstructions.Size = new Size(350, 160);
+            lblInstructions.TabIndex = 6;
+            lblInstructions.Text = "Instructions";
+            // 
             // LoadDataPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(564, 420);
+            Controls.Add(lblInstructions);
+            Controls.Add(label1);
             Controls.Add(btnLoadTemplateFromFile);
             Controls.Add(cbBoxMonth);
             Controls.Add(btnExit);
             Controls.Add(btnLoadMonth);
             Name = "LoadDataPage";
-            Text = "LoadDataPage";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Main";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -92,5 +116,7 @@
         private Button btnExit;
         private ComboBox cbBoxMonth;
         private Button btnLoadTemplateFromFile;
+        private Label label1;
+        private Label lblInstructions;
     }
 }

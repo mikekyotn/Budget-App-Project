@@ -25,7 +25,7 @@ namespace Budget_App_Project
             cbBoxPaymentDay.DataSource = days;
             cbBoxTransactType.DataSource = Enum.GetValues(typeof(TransactionType));
             lblHeaderMonth.Text = month;
-            cbBoxTransactType.SelectedItem = TransactionType.Bill;
+            cbBoxTransactType.SelectedItem = 0;
             cbBoxPaymentDay.SelectedItem = days[0];
             txtActPayment.Text = "0";
         }        

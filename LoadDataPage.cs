@@ -23,6 +23,11 @@ namespace Budget_App_Project
                           .Where(s => s != TransactionMonth.TEMPLATE);
             cbBoxMonth.DataSource = filteredMonths.ToList();
             cbBoxMonth.SelectedItem = TransactionMonth.January;
+            lblInstructions.Text = "Edit Template - Update a template of recurring " +
+                "transactions you can load into any month.\n" +
+                "Template is saved as Template.json \n\n"+
+                "Update Month - loads the selected month in the drop down from file."+
+                "File is saved as AllTransactions.json";
         }
         private void btnLoadMonth_Click(object sender, EventArgs e)
         {

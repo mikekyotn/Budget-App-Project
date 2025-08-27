@@ -27,7 +27,7 @@ namespace Budget_App_Project
 
         //Constructor - the only required arguments are dayOfMonthToPay, transactionMonth, paymentEstimated, and description
         public Transaction(uint dayOfMonthToPay, TransactionMonth month, decimal paymentEstimated, string description, bool isRecurringPayment = true, 
-            bool isAutoPaySetup = true, bool isPaid = false, decimal paymentActual = 0, TransactionType type = TransactionType.Bill, string comments = " ", string category = "undefined")
+            bool isAutoPaySetup = true, bool isPaid = false, decimal paymentActual = 0, TransactionType type = 0, string comments = " ", string category = "undefined")
         {
             Id = Guid.NewGuid();
             DayOfMonthToPay = dayOfMonthToPay;
@@ -60,7 +60,7 @@ namespace Budget_App_Project
     }
     public enum TransactionType
     {
-        Bill, Income
+        Expense, Income
     }
     //List for ALL transactions accessible by all forms, static so no instantiation required
     public static class AllTransactionData

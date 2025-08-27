@@ -62,6 +62,7 @@
             lblIncomeActual = new Label();
             lblExpenseActual = new Label();
             label8 = new Label();
+            lblDeleteInstructions = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
@@ -121,6 +122,7 @@
             Type.HeaderText = "Type";
             Type.MinimumWidth = 6;
             Type.Name = "Type";
+            Type.Visible = false;
             Type.Width = 125;
             // 
             // paymentEstimatedDataGridViewTextBoxColumn
@@ -197,7 +199,7 @@
             // 
             // btnNewTransaction
             // 
-            btnNewTransaction.Location = new Point(821, 519);
+            btnNewTransaction.Location = new Point(763, 448);
             btnNewTransaction.Name = "btnNewTransaction";
             btnNewTransaction.Size = new Size(124, 65);
             btnNewTransaction.TabIndex = 3;
@@ -227,7 +229,7 @@
             // 
             // btnDeleteTransaction
             // 
-            btnDeleteTransaction.Location = new Point(951, 519);
+            btnDeleteTransaction.Location = new Point(763, 519);
             btnDeleteTransaction.Name = "btnDeleteTransaction";
             btnDeleteTransaction.Size = new Size(124, 65);
             btnDeleteTransaction.TabIndex = 6;
@@ -362,11 +364,20 @@
             label8.TabIndex = 20;
             label8.Text = "$";
             // 
+            // lblDeleteInstructions
+            // 
+            lblDeleteInstructions.Location = new Point(895, 522);
+            lblDeleteInstructions.Name = "lblDeleteInstructions";
+            lblDeleteInstructions.Size = new Size(140, 60);
+            lblDeleteInstructions.TabIndex = 21;
+            lblDeleteInstructions.Text = "delete instructions";
+            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1291, 589);
+            Controls.Add(lblDeleteInstructions);
             Controls.Add(label8);
             Controls.Add(lblExpenseActual);
             Controls.Add(lblIncomeActual);
@@ -389,7 +400,8 @@
             Controls.Add(dataGridView1);
             Controls.Add(txtCurrentFunds);
             Name = "MonthViewDashboard";
-            Text = "MonthViewDashboard";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Dashboard";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).EndInit();
             ResumeLayout(false);
@@ -407,17 +419,6 @@
         private Button btnBackToMain;
         private Button btnDeleteTransaction;
         private Button btnCopyTemplateToMonth;
-        private DataGridViewTextBoxColumn transactionMonth;
-        private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn Type;
-        private DataGridViewTextBoxColumn paymentEstimatedDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn paymentActualDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn isPaidDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isRecurringPaymentDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
-        private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
         private Label label1;
         private Label label2;
         private Label label3;
@@ -431,5 +432,17 @@
         private Label lblIncomeActual;
         private Label lblExpenseActual;
         private Label label8;
+        private DataGridViewTextBoxColumn transactionMonth;
+        private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn Type;
+        private DataGridViewTextBoxColumn paymentEstimatedDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn paymentActualDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn isPaidDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn isRecurringPaymentDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
+        private Label lblDeleteInstructions;
     }
 }
