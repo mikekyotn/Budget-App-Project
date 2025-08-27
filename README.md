@@ -8,3 +8,5 @@ This is a budget tracking app made using WinForms.
 - --GUI, user interface flow
 - --app design
 - --OOP
+- --Event handling
+- --Error handling
