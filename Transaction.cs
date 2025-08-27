@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Budget_App_Project
     {
         private decimal paymentEstimated;
         private decimal paymentActual;
+        private bool isPaid;
         public Guid Id { get; set; } //globally unique identifier
         public uint DayOfMonthToPay { get; set; } // required
         public  TransactionMonth? transactionMonth { get; set;  }    // required
@@ -28,10 +30,21 @@ namespace Budget_App_Project
                 }
             }
         } //required
-        public string? Description { get; set; } //who's getting paid or paying - required
-        public bool IsRecurringPayment { get; set; } // optional default true
-        public bool IsAutoPaySetup { get; set; } //optional default false
-        public bool IsPaid { get; set; } //optional default false                
+        public string Description { get; set; } = string.Empty; //who's getting paid or paying - required
+        public bool IsRecurringPayment { get; set; } //defaults to True for Template item
+        public bool IsAutoPaySetup { get; set; } //Not used; for possible future use
+        public bool IsPaid 
+        { 
+            get { return isPaid; }
+            set
+            {
+                if (isPaid != value)
+                {
+                    isPaid = value;
+                    OnPropertyChanged(nameof(IsPaid));
+                }
+            }
+        }                 
         public decimal PaymentActual 
         { 
             get { return paymentActual; }
@@ -43,12 +56,11 @@ namespace Budget_App_Project
                     OnPropertyChanged(nameof(PaymentActual));
                 }
             }
-        } //optional default 0        
-        public TransactionType Type { get; set; } //is this a bill or income - required
-        public string? Comments { get; set; } // optional default ""        
-        public string? Category { get; set; } //initially user defined, may make enum later optional default "undefined"
+        }         
+        public TransactionType Type { get; set; }
+        public string Comments { get; set; } = string.Empty; // optional default ""        
+        public string Category { get; set; } = string.Empty; 
         
-
         //Constructor - the only required arguments are dayOfMonthToPay, transactionMonth, paymentEstimated, and description
         public Transaction(uint dayOfMonthToPay, TransactionMonth month, decimal paymentEstimated, string description, bool isRecurringPayment = true, 
             bool isAutoPaySetup = true, bool isPaid = false, decimal paymentActual = 0, TransactionType type = 0, string comments = " ", string category = "undefined")
@@ -87,7 +99,7 @@ namespace Budget_App_Project
     }
     public enum TransactionType
     {
-        Expense, Income
+        Expense, Income, Transfer
     }
     //List for ALL transactions accessible by all forms, static so no instantiation required
     public static class AllTransactionData

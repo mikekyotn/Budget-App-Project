@@ -63,6 +63,9 @@
             lblExpenseActual = new Label();
             label8 = new Label();
             lblDeleteInstructions = new Label();
+            label9 = new Label();
+            lblIncomeUnpaid = new Label();
+            lblExpenseUnpaid = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)transactionBindingSource).BeginInit();
             SuspendLayout();
@@ -106,7 +109,7 @@
             dayOfMonthToPayDataGridViewTextBoxColumn.HeaderText = "Due Day";
             dayOfMonthToPayDataGridViewTextBoxColumn.MinimumWidth = 6;
             dayOfMonthToPayDataGridViewTextBoxColumn.Name = "dayOfMonthToPayDataGridViewTextBoxColumn";
-            dayOfMonthToPayDataGridViewTextBoxColumn.Width = 125;
+            dayOfMonthToPayDataGridViewTextBoxColumn.Width = 50;
             // 
             // descriptionDataGridViewTextBoxColumn
             // 
@@ -147,7 +150,7 @@
             isPaidDataGridViewCheckBoxColumn.HeaderText = "Payment Complete";
             isPaidDataGridViewCheckBoxColumn.MinimumWidth = 6;
             isPaidDataGridViewCheckBoxColumn.Name = "isPaidDataGridViewCheckBoxColumn";
-            isPaidDataGridViewCheckBoxColumn.Width = 125;
+            isPaidDataGridViewCheckBoxColumn.Width = 75;
             // 
             // isRecurringPaymentDataGridViewCheckBoxColumn
             // 
@@ -181,7 +184,7 @@
             commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
             commentsDataGridViewTextBoxColumn.MinimumWidth = 6;
             commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
-            commentsDataGridViewTextBoxColumn.Width = 300;
+            commentsDataGridViewTextBoxColumn.Width = 400;
             // 
             // transactionBindingSource
             // 
@@ -290,7 +293,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label4.ForeColor = SystemColors.ControlText;
-            label4.Location = new Point(371, 455);
+            label4.Location = new Point(294, 455);
             label4.Name = "label4";
             label4.Size = new Size(123, 20);
             label4.TabIndex = 12;
@@ -300,7 +303,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label5.Location = new Point(516, 455);
+            label5.Location = new Point(439, 455);
             label5.Name = "label5";
             label5.Size = new Size(100, 20);
             label5.TabIndex = 13;
@@ -310,7 +313,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label6.Location = new Point(293, 484);
+            label6.Location = new Point(216, 484);
             label6.Name = "label6";
             label6.Size = new Size(61, 20);
             label6.TabIndex = 14;
@@ -320,7 +323,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label7.Location = new Point(282, 530);
+            label7.Location = new Point(205, 530);
             label7.Name = "label7";
             label7.Size = new Size(73, 20);
             label7.TabIndex = 15;
@@ -328,7 +331,7 @@
             // 
             // lblIncomeBudgeted
             // 
-            lblIncomeBudgeted.Location = new Point(371, 484);
+            lblIncomeBudgeted.Location = new Point(294, 484);
             lblIncomeBudgeted.Name = "lblIncomeBudgeted";
             lblIncomeBudgeted.Size = new Size(100, 20);
             lblIncomeBudgeted.TabIndex = 16;
@@ -337,7 +340,7 @@
             // 
             // lblExpenseBudgeted
             // 
-            lblExpenseBudgeted.Location = new Point(371, 530);
+            lblExpenseBudgeted.Location = new Point(294, 530);
             lblExpenseBudgeted.Name = "lblExpenseBudgeted";
             lblExpenseBudgeted.Size = new Size(100, 20);
             lblExpenseBudgeted.TabIndex = 17;
@@ -346,7 +349,7 @@
             // 
             // lblIncomeActual
             // 
-            lblIncomeActual.Location = new Point(510, 484);
+            lblIncomeActual.Location = new Point(433, 484);
             lblIncomeActual.Name = "lblIncomeActual";
             lblIncomeActual.Size = new Size(100, 20);
             lblIncomeActual.TabIndex = 18;
@@ -355,7 +358,7 @@
             // 
             // lblExpenseActual
             // 
-            lblExpenseActual.Location = new Point(510, 530);
+            lblExpenseActual.Location = new Point(433, 530);
             lblExpenseActual.Name = "lblExpenseActual";
             lblExpenseActual.Size = new Size(100, 20);
             lblExpenseActual.TabIndex = 19;
@@ -379,11 +382,44 @@
             lblDeleteInstructions.TabIndex = 21;
             lblDeleteInstructions.Text = "delete instructions";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label9.Location = new Point(562, 455);
+            label9.Name = "label9";
+            label9.Size = new Size(124, 20);
+            label9.TabIndex = 22;
+            label9.Text = "Estimated Upaid";
+            // 
+            // lblIncomeUnpaid
+            // 
+            lblIncomeUnpaid.Location = new Point(586, 484);
+            lblIncomeUnpaid.Name = "lblIncomeUnpaid";
+            lblIncomeUnpaid.Size = new Size(100, 20);
+            lblIncomeUnpaid.TabIndex = 23;
+            lblIncomeUnpaid.Text = "Amount";
+            lblIncomeUnpaid.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblExpenseUnpaid
+            // 
+            lblExpenseUnpaid.Location = new Point(586, 530);
+            lblExpenseUnpaid.Name = "lblExpenseUnpaid";
+            lblExpenseUnpaid.Size = new Size(100, 20);
+            lblExpenseUnpaid.TabIndex = 24;
+            lblExpenseUnpaid.Text = "Amount";
+            lblExpenseUnpaid.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // MonthViewDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             ClientSize = new Size(1291, 589);
+            ControlBox = false;
+            Controls.Add(lblExpenseUnpaid);
+            Controls.Add(lblIncomeUnpaid);
+            Controls.Add(label9);
             Controls.Add(lblDeleteInstructions);
             Controls.Add(label8);
             Controls.Add(lblExpenseActual);
@@ -439,6 +475,7 @@
         private Label lblIncomeActual;
         private Label lblExpenseActual;
         private Label label8;
+        private Label lblDeleteInstructions;
         private DataGridViewTextBoxColumn transactionMonth;
         private DataGridViewTextBoxColumn dayOfMonthToPayDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
@@ -450,6 +487,8 @@
         private DataGridViewCheckBoxColumn isAutoPaySetupDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
-        private Label lblDeleteInstructions;
+        private Label label9;
+        private Label lblIncomeUnpaid;
+        private Label lblExpenseUnpaid;
     }
 }

@@ -39,13 +39,21 @@ namespace Budget_App_Project
                 FilterAndUpdateDataSource(month);
                 txtCurrentFunds.Text = GetCurrentFunds(month).ToString();
             }
-            dataGridView1.DataError += DataGridView_DataError;
-            dataGridView1.CellFormatting += DataGridViewCellFormatting;
+            dataGridView1.DataError += DataGridView_DataError; //handle invalid data type entered
+            dataGridView1.CellFormatting += DataGridViewCellFormatting; //show decimal values as currency
             lblMonth.Text = month;
             lblDeleteInstructions.Text = "Click on any cell in a row then click button to delete row";
-            ReplaceEnumColumnWithCombo<TransactionType>(dataGridView1, "Type", "Type", 3);
+            ReplaceEnumColumnWithCombo<TransactionType>(dataGridView1, "Type", "Type", 3); //ComboBox
+            ReplaceCategoryColumnWithCombo(dataGridView1);
+            txtCurrentFunds.TextChanged += TxtCurrentFunds_TextChanged; //listener for change in value
             CalculateTotalsForDashboard();
         }
+
+        private void TxtCurrentFunds_TextChanged(object? sender, EventArgs e)
+        {
+            CalculateTotalsForDashboard();
+        }
+
         private void DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {            
             e.ThrowException = false; //prevent error message from appearing
@@ -77,15 +85,13 @@ namespace Budget_App_Project
         {
             TransactionMonth enumMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), month);
             List<Transaction> filteredList = AllTransactionData.TransactionList.Where(t => t.transactionMonth == enumMonth).OrderBy(t => t.DayOfMonthToPay).ToList();
-            //dataGridView1.DataSource = new BindingList<Transaction>(filteredList);
             var filteredBindingList = new BindingList<Transaction>(filteredList);
             filteredBindingList.ListChanged += TransactionListChanged;
             dataGridView1.DataSource = filteredBindingList;
-
         }
         public string GetFolderPath()
         {
-            return @"d:\G5ProgSpace\BudgetAppFiles";
+            return AppSettingsManager.UserSettings.UserFolderPath;
         }
         public void LoadTemplateFromFile(string fileName)
         {
@@ -96,7 +102,7 @@ namespace Budget_App_Project
             else
             {
                 var json = File.ReadAllText(filePath);
-                MonthTemplate.TemplateMaster = JsonSerializer.Deserialize<List<Transaction>>(json);               
+                MonthTemplate.TemplateMaster = JsonSerializer.Deserialize<List<Transaction>>(json);
             }
         }
         public void LoadTransactionListFromFile(string fileName)
@@ -119,9 +125,11 @@ namespace Budget_App_Project
         {
             decimal incomeEstimatedTotal = 0;
             decimal incomeActualTotal = 0;
+            decimal incomeUnpaid = 0;
             decimal expenseEstimatedTotal = 0;
             decimal expenseActualTotal = 0;
-            decimal estimatedMonthEndBalance = decimal.Parse(txtCurrentFunds.Text);
+            decimal expenseUnpaid = 0;
+            decimal estimatedMonthEndBalance = ParseCurrentFunds();
             var data = (BindingList<Transaction>)dataGridView1.DataSource;
             foreach (var t in data)
             {
@@ -130,21 +138,36 @@ namespace Budget_App_Project
                     incomeEstimatedTotal += t.PaymentEstimated;
                     incomeActualTotal += t.PaymentActual;
                     if (t.IsPaid == false)
+                    {
                         estimatedMonthEndBalance += t.PaymentEstimated;
+                        incomeUnpaid += t.PaymentEstimated;
+                    }
                 }
                 else
                 {
                     expenseEstimatedTotal += t.PaymentEstimated;
                     expenseActualTotal += t.PaymentActual;
                     if (t.IsPaid == false)
+                    {
                         estimatedMonthEndBalance -= t.PaymentEstimated;
+                        expenseUnpaid += t.PaymentEstimated;
+                    }
                 }
             }
             lblEstimatedEndBalance.Text = estimatedMonthEndBalance.ToString("C2");
             lblIncomeBudgeted.Text = incomeEstimatedTotal.ToString("C2");
             lblIncomeActual.Text = incomeActualTotal.ToString("C2");
+            lblIncomeUnpaid.Text = incomeUnpaid.ToString("C2");
             lblExpenseBudgeted.Text = expenseEstimatedTotal.ToString("C2");
             lblExpenseActual.Text = expenseActualTotal.ToString("C2");
+            lblExpenseUnpaid.Text = expenseUnpaid.ToString("C2");
+        }
+        private decimal ParseCurrentFunds()
+        {
+            decimal funds = 0;
+            if (decimal.TryParse(txtCurrentFunds.Text, out funds))
+                return funds;
+            else return 0;
         }
         private void btnSaveTransactions_Click(object sender, EventArgs e)
         {
@@ -206,13 +229,15 @@ namespace Budget_App_Project
         {
             AddTransactionForm addNewTransaction = new AddTransactionForm(lblMonth.Text);
             addNewTransaction.ShowDialog();
+            
 
             if (lblMonth.Text == "TEMPLATE")
                 //Only update required for dataGridView datasource
-                UpdateTemplateDataSource();
+                UpdateTemplateDataSource();                
             else
                 //need to refilter and update the dataGridView datasource
                 FilterAndUpdateDataSource(lblMonth.Text);
+            CalculateTotalsForDashboard();
         }
         private void btnBackToMain_Click(object sender, EventArgs e)
         {
@@ -245,6 +270,7 @@ namespace Budget_App_Project
                 AllTransactionData.TransactionList.Remove(selectedTransaction);
                 FilterAndUpdateDataSource(lblMonth.Text);
             }
+            CalculateTotalsForDashboard();
         }        
         private void btnCopyTemplateToMonth_Click(object sender, EventArgs e)
         {
@@ -299,7 +325,7 @@ namespace Budget_App_Project
                 e.FormattingApplied = true;
             }
         }
-        public void ReplaceEnumColumnWithCombo<EnumT>(DataGridView grid, string propertyName, string headerName, int index)
+        public void ReplaceEnumColumnWithCombo<T>(DataGridView grid, string propertyName, string headerName, int index)
         {
             grid.Columns.Remove(propertyName);
 
@@ -308,10 +334,26 @@ namespace Budget_App_Project
                 DataPropertyName = propertyName,
                 Name = propertyName,
                 HeaderText = headerName,
-                DataSource = Enum.GetValues(typeof(EnumT)),
-                ValueType = typeof(EnumT),
+                DataSource = Enum.GetValues(typeof(T)),
+                ValueType = typeof(T),
                 DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
                 DisplayIndex = index
+            };
+            grid.Columns.Add(comboColumn);
+        }
+        public void ReplaceCategoryColumnWithCombo(DataGridView grid)
+        {
+            grid.Columns.Remove("categoryDataGridViewTextBoxColumn");
+
+            var comboColumn = new DataGridViewComboBoxColumn
+            {
+                DataPropertyName = "Category",
+                Name = "Category",
+                HeaderText = "Category",
+                DataSource = AppSettingsManager.UserSettings.CategoryList,
+                //ValueType = string,
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
+                DisplayIndex = 7
             };
             grid.Columns.Add(comboColumn);
         }
@@ -319,8 +361,7 @@ namespace Budget_App_Project
         {
             if (e.ListChangedType == ListChangedType.ItemChanged)
             {
-                var changedItem = ((BindingList<Transaction>)sender)[e.NewIndex];
-                //Console.WriteLine($"Transaction changed: {changedItem.Amount}");                                
+                var changedItem = ((BindingList<Transaction>)sender)[e.NewIndex];                                                
                 CalculateTotalsForDashboard();
             }
         }

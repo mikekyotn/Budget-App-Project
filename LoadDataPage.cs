@@ -16,6 +16,9 @@ namespace Budget_App_Project
         public LoadDataPage()
         {
             InitializeComponent();
+            //Load User Saved app settings if any
+            AppSettingsManager.LoadAppSettings();
+
             //cbBoxMonth allows user to select month to filter the data by month when loading
             //filteredMonths hides the TEMPLATE option from the user in the comboBox
             var filteredMonths = Enum.GetValues(typeof(TransactionMonth))
@@ -25,8 +28,8 @@ namespace Budget_App_Project
             cbBoxMonth.SelectedItem = TransactionMonth.January;
             lblInstructions.Text = "Edit Template - Update a template of recurring " +
                 "transactions you can load into any month.\n" +
-                "Template is saved as Template.json \n\n"+
-                "Update Month - loads the selected month in the drop down from file."+
+                "Template is saved as Template.json \n\n" +
+                "Update Month - loads the selected month in the drop down from file.\n" +
                 "File is saved as AllTransactions.json";
         }
         private void btnLoadMonth_Click(object sender, EventArgs e)
@@ -39,11 +42,15 @@ namespace Budget_App_Project
         {
             this.Close();
         }
-
         private void btnLoadTemplateFromFile_Click(object sender, EventArgs e)
         {
             MonthViewDashboard monthView = new MonthViewDashboard("TEMPLATE");
             monthView.Show();
+        }
+        private void btnChooseSaveLocation_Click(object sender, EventArgs e)
+        {
+            AppSettingsManager.AskUserForSavePath();
+            AppSettingsManager.SaveAppSettings(AppSettingsManager.UserSettings);
         }
     }
 }

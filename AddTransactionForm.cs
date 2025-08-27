@@ -23,10 +23,11 @@ namespace Budget_App_Project
                 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
 
             cbBoxPaymentDay.DataSource = days;
-            cbBoxTransactType.DataSource = Enum.GetValues(typeof(TransactionType));
-            lblHeaderMonth.Text = month;
-            cbBoxTransactType.SelectedItem = 0;
             cbBoxPaymentDay.SelectedItem = days[0];
+            cbBoxTransactType.DataSource = Enum.GetValues(typeof(TransactionType));
+            cbBoxTransactType.SelectedItem = 0;
+            cbBoxCategory.DataSource = AppSettingsManager.UserSettings.CategoryList;
+            lblHeaderMonth.Text = month;       
             txtActPayment.Text = "0";
         }        
         private void button1_Click(object sender, EventArgs e)
@@ -39,44 +40,62 @@ namespace Budget_App_Project
         // entries for decimal data types and required values.
         private void btnSave_Click(object sender, EventArgs e)
         {
-            uint day = (uint)cbBoxPaymentDay.SelectedItem;
-            TransactionType type = (TransactionType)cbBoxTransactType.SelectedItem;
-            if (lblHeaderMonth.Text == "TEMPLATE")
-            {                
-                MonthTemplate.TemplateMaster.Add(
-                    new Transaction(
-                    day,
-                    TransactionMonth.TEMPLATE, 
-                    decimal.Parse(txtEstPayment.Text),
-                    txtDescription.Text,
-                    true,
-                    false,
-                    chkBoxPayComplete.Checked,
-                    decimal.Parse(txtActPayment.Text),
-                    type,
-                    txtComments.Text,
-                    "User-added"
-                    ));
-            }
-            else
-            {
-                TransactionMonth thisMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblHeaderMonth.Text);                
-                AllTransactionData.TransactionList.Add(
-                    new Transaction(
-                    day,
-                    thisMonth,
-                    decimal.Parse(txtEstPayment.Text),
-                    txtDescription.Text,
-                    false,
-                    false,
-                    chkBoxPayComplete.Checked,
-                    decimal.Parse(txtActPayment.Text),
-                    type,
-                    txtComments.Text,
-                    "User-added"
-                    ));
-            }
-            this.Close();
+            bool validInput = true;            
+                try
+                {
+                    uint day = (uint)cbBoxPaymentDay.SelectedItem;
+                    TransactionType type = (TransactionType)cbBoxTransactType.SelectedItem;
+                    string category = cbBoxCategory.SelectedItem.ToString();
+                    if (lblHeaderMonth.Text == "TEMPLATE")
+                    {
+                        MonthTemplate.TemplateMaster.Add(
+                            new Transaction(
+                            day,
+                            TransactionMonth.TEMPLATE,
+                            decimal.Parse(txtEstPayment.Text),
+                            txtDescription.Text,
+                            true,
+                            false,
+                            chkBoxPayComplete.Checked,
+                            decimal.Parse(txtActPayment.Text),
+                            type,
+                            txtComments.Text,
+                            category
+                            ));
+                    }
+                    else
+                    {
+                        TransactionMonth thisMonth = (TransactionMonth)Enum.Parse(typeof(TransactionMonth), lblHeaderMonth.Text);
+                        AllTransactionData.TransactionList.Add(
+                            new Transaction(
+                            day,
+                            thisMonth,
+                            decimal.Parse(txtEstPayment.Text),
+                            txtDescription.Text,
+                            false,
+                            false,
+                            chkBoxPayComplete.Checked,
+                            decimal.Parse(txtActPayment.Text),
+                            type,
+                            txtComments.Text,
+                            category
+                        ));
+                    }          
+                }
+                catch 
+                {
+                    validInput = false;
+                    MessageBox.Show(
+                    $"Unable to Save \n" +
+                    $"Invalid Entry in the Payment Field(s)\n" +
+                    "Please ensure it is a decimal value",
+                    "Invalid Input",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
+                }
+            if ( validInput ) 
+                this.Close();
         }
     }
 }

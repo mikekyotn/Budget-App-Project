@@ -34,6 +34,7 @@
             btnLoadTemplateFromFile = new Button();
             label1 = new Label();
             lblInstructions = new Label();
+            btnChooseSaveLocation = new Button();
             SuspendLayout();
             // 
             // btnLoadMonth
@@ -92,11 +93,23 @@
             lblInstructions.TabIndex = 6;
             lblInstructions.Text = "Instructions";
             // 
+            // btnChooseSaveLocation
+            // 
+            btnChooseSaveLocation.Location = new Point(12, 337);
+            btnChooseSaveLocation.Name = "btnChooseSaveLocation";
+            btnChooseSaveLocation.Size = new Size(103, 60);
+            btnChooseSaveLocation.TabIndex = 7;
+            btnChooseSaveLocation.Text = "Change Save Location";
+            btnChooseSaveLocation.UseVisualStyleBackColor = true;
+            btnChooseSaveLocation.Click += btnChooseSaveLocation_Click;
+            // 
             // LoadDataPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(564, 420);
+            ControlBox = false;
+            Controls.Add(btnChooseSaveLocation);
             Controls.Add(lblInstructions);
             Controls.Add(label1);
             Controls.Add(btnLoadTemplateFromFile);
@@ -118,5 +131,6 @@
         private Button btnLoadTemplateFromFile;
         private Label label1;
         private Label lblInstructions;
+        private Button btnChooseSaveLocation;
     }
 }

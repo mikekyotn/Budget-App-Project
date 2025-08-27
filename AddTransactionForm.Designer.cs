@@ -46,6 +46,8 @@
             txtComments = new TextBox();
             button1 = new Button();
             btnSave = new Button();
+            label9 = new Label();
+            cbBoxCategory = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -102,7 +104,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 15F);
-            label5.Location = new Point(28, 247);
+            label5.Location = new Point(28, 307);
             label5.Name = "label5";
             label5.Size = new Size(226, 35);
             label5.TabIndex = 5;
@@ -112,7 +114,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(28, 303);
+            label6.Location = new Point(28, 363);
             label6.Name = "label6";
             label6.Size = new Size(224, 35);
             label6.TabIndex = 6;
@@ -122,7 +124,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 15F);
-            label7.Location = new Point(312, 303);
+            label7.Location = new Point(312, 363);
             label7.Name = "label7";
             label7.Size = new Size(186, 35);
             label7.TabIndex = 7;
@@ -132,7 +134,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 15F);
-            label8.Location = new Point(28, 350);
+            label8.Location = new Point(28, 410);
             label8.Name = "label8";
             label8.Size = new Size(135, 35);
             label8.TabIndex = 8;
@@ -169,7 +171,7 @@
             // txtEstPayment
             // 
             txtEstPayment.Font = new Font("Segoe UI", 15F);
-            txtEstPayment.Location = new Point(352, 241);
+            txtEstPayment.Location = new Point(352, 301);
             txtEstPayment.Name = "txtEstPayment";
             txtEstPayment.Size = new Size(146, 41);
             txtEstPayment.TabIndex = 12;
@@ -179,7 +181,7 @@
             chkBoxPayComplete.AutoSize = true;
             chkBoxPayComplete.BackColor = SystemColors.ControlLightLight;
             chkBoxPayComplete.Font = new Font("Segoe UI", 9F);
-            chkBoxPayComplete.Location = new Point(258, 314);
+            chkBoxPayComplete.Location = new Point(258, 374);
             chkBoxPayComplete.Name = "chkBoxPayComplete";
             chkBoxPayComplete.Size = new Size(18, 17);
             chkBoxPayComplete.TabIndex = 13;
@@ -188,7 +190,7 @@
             // txtActPayment
             // 
             txtActPayment.Font = new Font("Segoe UI", 15F);
-            txtActPayment.Location = new Point(504, 300);
+            txtActPayment.Location = new Point(504, 360);
             txtActPayment.Name = "txtActPayment";
             txtActPayment.Size = new Size(146, 41);
             txtActPayment.TabIndex = 14;
@@ -196,7 +198,7 @@
             // txtComments
             // 
             txtComments.Font = new Font("Segoe UI", 12F);
-            txtComments.Location = new Point(169, 352);
+            txtComments.Location = new Point(169, 412);
             txtComments.Name = "txtComments";
             txtComments.Size = new Size(481, 34);
             txtComments.TabIndex = 15;
@@ -204,7 +206,7 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 12F);
-            button1.Location = new Point(162, 400);
+            button1.Location = new Point(162, 481);
             button1.Name = "button1";
             button1.Size = new Size(94, 38);
             button1.TabIndex = 16;
@@ -215,7 +217,7 @@
             // btnSave
             // 
             btnSave.Font = new Font("Segoe UI", 12F);
-            btnSave.Location = new Point(424, 400);
+            btnSave.Location = new Point(424, 481);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(94, 38);
             btnSave.TabIndex = 17;
@@ -223,11 +225,33 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 15F);
+            label9.Location = new Point(28, 250);
+            label9.Name = "label9";
+            label9.Size = new Size(115, 35);
+            label9.TabIndex = 18;
+            label9.Text = "Category";
+            // 
+            // cbBoxCategory
+            // 
+            cbBoxCategory.Font = new Font("Segoe UI", 15F);
+            cbBoxCategory.FormattingEnabled = true;
+            cbBoxCategory.Location = new Point(353, 243);
+            cbBoxCategory.Name = "cbBoxCategory";
+            cbBoxCategory.Size = new Size(249, 43);
+            cbBoxCategory.TabIndex = 19;
+            // 
             // AddTransactionForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(666, 450);
+            ClientSize = new Size(666, 544);
+            ControlBox = false;
+            Controls.Add(cbBoxCategory);
+            Controls.Add(label9);
             Controls.Add(btnSave);
             Controls.Add(button1);
             Controls.Add(txtComments);
@@ -272,5 +296,7 @@
         private TextBox txtComments;
         private Button button1;
         private Button btnSave;
+        private Label label9;
+        private ComboBox cbBoxCategory;
     }
 }
