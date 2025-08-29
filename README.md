@@ -1,8 +1,12 @@
 This is a budget tracking app made using WinForms.
 - .NET, C#, WinForms
-- Learned topics:
+- Note: this program will save 3 files to your computer.
+- --1. .json file for user settings which holds the user defined location for save files.  Location is C:\Users\user\AppData\Local\MyBudgetApp.  It will create the MyBudgetApp directory.
+- --2. .json file for AllTransactions located where user defines it and is stored in file 1 above.
+- --3. .json file for Template located where user defines it and is stored in file 1 above.
+- Topics learned and reinforced with this app:
 - --json serialization/deserialization
-- --Interfaces: INotifyPropertyChanged, IComparer
+- --Interfaces: INotifyPropertyChanged, IEquatable
 - --data binding: using master List of elements to be able to filter subsection into a BindingList which is then the DataSource for a dataGridView
 - --CRUD
 - --GUI, user interface flow
@@ -10,3 +14,4 @@ This is a budget tracking app made using WinForms.
 - --OOP
 - --Event handling
 - --Error handling
+- --Data validation
